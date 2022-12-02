@@ -4,12 +4,12 @@
 $rep=__DIR__.'/../';
 
 // liste des modules à inclure
-//$dConfig['includes']= array('controleur/Validation.php');
+$dConfig['includes']= array('controleur/Validation.php');
 
 //BD
-$base="";
-$login="";
-$mdp="";
+$dsn="mysql:host=londres.uca.local;dbname=dbalferon";
+$login="alferon";
+$mdp="achanger";
 
 //Vues
 $vues['erreur']='vues/erreur.php';
