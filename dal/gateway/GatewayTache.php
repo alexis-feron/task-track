@@ -1,5 +1,7 @@
 <?php
 
+//require tache
+
 class GatewayTache
 {
     private $conn;
@@ -32,6 +34,33 @@ class GatewayTache
         $query = "DELETE FROM tache WHERE tacheId =:id";
         return $this->conn->executeQuery($query,array(
             ':id' => array($id, PDO::PARAM_INT)));
+    }
+
+    public function getTache(int $l, int $page, int $nbTache) : iterable
+    {
+        $query = "SELECT * FROM tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
+        if(!$this->conn->executeQuery($query,array(
+            ":i" => array($l, PDO::PARAM_INT),
+            ":p" => array(($page-1)*$nbTache, PDO::PARAM_INT),
+            ":n" => array($nbTache, PDO::PARAM_INT))))
+        {
+            return array();
+        }
+
+        $res = $this->conn->getResults();
+        $taches = array();
+        foreach($res as $tache)
+        {
+            $taches[] = new Tache(
+                $tache["NomTache"],
+                $tache["TacheFaite"],
+                $tache["Commentaire"],
+                $tache["tacheID"],
+                $tache["DateCreation"],
+                $tache["listID"]
+            );
+        }
+        return $taches;
     }
 
 
