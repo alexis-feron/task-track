@@ -30,11 +30,11 @@ class GatewayCompte
 
     }
 
-    public function supprimer($compteSuppr)
+    public function supprimer(Compte $compteSuppr)
     {
         $query = "DELETE FROM compte WHERE pseudonyme =:i";
         return $this->conn->executeQuerry($query, array(
-            ":i" => array($compteAModifier->getPseudonyme(), PDO::PARAM_INT)));
+            ":i" => array($compteModif->getPseudonyme(), PDO::PARAM_INT)));
     }
 
 
