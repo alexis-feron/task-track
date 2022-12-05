@@ -2,6 +2,11 @@
 
 //require tache
 
+/*
+insererSimple -> inserer
+supprimerAvecTacheID -> supprimer
+getTachesParIDListe -> getTache
+ */
 class GatewayTache
 {
     private $conn;

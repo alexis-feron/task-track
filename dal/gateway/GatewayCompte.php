@@ -2,6 +2,10 @@
 
 require_once("dal/gateway/GatewayListe.php");
 //require compte
+/*
+inscription -> CreerCompte
+getCompteParPseudo -> getCompte
+*/
 
 class GatewayCompte
 {
@@ -34,7 +38,7 @@ class GatewayCompte
     {
         $query = "DELETE FROM compte WHERE pseudonyme =:i";
         return $this->conn->executeQuerry($query, array(
-            ":i" => array($compteModif->getPseudonyme(), PDO::PARAM_INT)));
+            ":i" => array($compteSuppr->getPseudonyme(), PDO::PARAM_INT)));
     }
 
 

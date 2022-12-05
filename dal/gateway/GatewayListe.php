@@ -3,6 +3,13 @@
 // require tache
 //require todolist
 require_once("dal/gateway/GatewayTache.php");
+
+/*
+ supprimerAvecListID -> supprimer
+modiferNomListe -> modifer
+ActualiserListe -> Actualiser
+getListeParID -> getListe
+*/
 class GatewayListe
 {
     private $conn;
@@ -30,18 +37,18 @@ class GatewayListe
             ':i' => array($listeId, PDO::PARAM_INT)));
     }
 
-    public function modifier(ToDOList $l): bool
-    {
-        $query = "UPDATE toDoList SET nom=:n WHERE listeId =:i";
+    public function modifier(int $id, string $nom) : bool
+	{
+        $query = "UPDATE _TodoList SET nom=:n WHERE listeID=:id";
         return $this->conn->executeQuery($query, array(
-            ":n" => array($l->getNom(), PDO::PARAM_STR),
-            ":i" => array($l->getListId(), PDO::PARAM_INT)));
+            ":n" => array($nom, PDO::PARAM_STR),
+            ":id" => array($id, PDO::PARAM_INT)));
     }
 
     public function Actualiser(ToDOList $l, int $page, int $nbTaches): ToDOList
     {
         $gwTache = new GatewayTache($this->conn);
-        $l->setTaches($gwTaches->getTache($l->getId(), $page, $nbTaches));
+        $l->setTaches($gwTache->getTache($l->getId(), $page, $nbTaches));
         return $l;
     }
 
@@ -50,7 +57,7 @@ class GatewayListe
         $gwTache = new GatewayTache($this->conn);
         $query = "SELECT * FROM _TodoList WHERE listeID = :i";
         $isOK = $this->conn->executeQuery($query, array(
-            ":i" => [$id, PDO::PARAM_INT]));
+            ":i" => array($id, PDO::PARAM_INT)));
         if (!$isOK) {
             throw new Exception("Erreur lors de la récupération de la liste numéro $id");
         }
@@ -62,8 +69,11 @@ class GatewayListe
         return new ToDOList(
             $liste["listeID"],
             $liste["nom"],
-            $liste["Createur"],
-            $gwTache->getTaches($liste["listeID"], 1, 10)
+            $gwTache->getTache($liste["listeID"], 1, 10)
         );
     }
+
+
+
+
 }
