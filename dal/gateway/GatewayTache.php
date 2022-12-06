@@ -1,12 +1,7 @@
 <?php
 
-//require tache
+require_once("metier/Tache.php");
 
-/*
-insererSimple -> inserer
-supprimerAvecTacheID -> supprimer
-getTachesParIDListe -> getTache
- */
 class GatewayTache
 {
     private $conn;
@@ -18,7 +13,7 @@ class GatewayTache
 
     public function inserer(string $nom, int $listeId) : bool
     {
-        $query = "INSERT INTO tache(nom, faite, listeId) VALUES( :n, :f, :i)";
+        $query = "INSERT INTO Tache(nom, faite, listeId) VALUES( :n, :f, :i)";
 
         return $this->conn->executeQuery($query, array(
             ':n' => array($nom, PDO::PARAM_STR),
@@ -28,7 +23,7 @@ class GatewayTache
 
     public function modifier(Tache $tacheAModifier)
     {
-        $query = "UPDATE tache SET nom = :n, faite = :f WHERE id = :i";
+        $query = "UPDATE Tache SET nom = :n, faite = :f WHERE id = :i";
         return $this->conn->executeQuery($query,array(
             ':n' => array($tacheAModifier->getNom(), PDO::PARAM_STR),
             ':fait' => array($tacheAModifier->estFait(), PDO::PARAM_BOOL)));
@@ -36,14 +31,14 @@ class GatewayTache
 
     public function supprimer(int $id)
     {
-        $query = "DELETE FROM tache WHERE tacheId =:id";
+        $query = "DELETE FROM Tache WHERE tacheId =:id";
         return $this->conn->executeQuery($query,array(
             ':id' => array($id, PDO::PARAM_INT)));
     }
 
     public function getTache(int $l, int $page, int $nbTache) : iterable
     {
-        $query = "SELECT * FROM tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
+        $query = "SELECT * FROM Tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
         if(!$this->conn->executeQuery($query,array(
             ":i" => array($l, PDO::PARAM_INT),
             ":p" => array(($page-1)*$nbTache, PDO::PARAM_INT),

@@ -7,10 +7,10 @@ class Compte
     private $motDePasse;
 
 
-    public function __construct(string $nom,  iterable $lists = array(), string $motDePasse)
+    public function __construct(string $nom,  iterable $listes = array(), string $motDePasse)
     {
         $this->pseudonyme = $nom;
-        $this->listes = $lists;
+        $this->listes = $listes;
         $this->motDePasse = $motDePasse;
     }
 
@@ -35,7 +35,7 @@ class Compte
     {
         return $this->listes;
     }
-    public function setListes(iterable $listes)
+    public function setListe(iterable $listes)
     {
         $this->listes = $listes;
     }

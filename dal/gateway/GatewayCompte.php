@@ -1,11 +1,6 @@
 <?php
 
 require_once("dal/gateway/GatewayListe.php");
-//require compte
-/*
-inscription -> CreerCompte
-getCompteParPseudo -> getCompte
-*/
 
 class GatewayCompte
 {
@@ -19,7 +14,7 @@ class GatewayCompte
 
     public function CreerCompte(string $pseudo, string $mdp) : bool
     {
-        $query = "INSERT INTO compte(pseudonyme, motDePasse) VALUSES(:p, :m)";
+        $query = "INSERT INTO Utilisateur(pseudonyme, motDePasse) VALUSES(:p, :m)";
         return $this->conn->executeQuerry($query, array(
             ":p" => array($pseudo->getPseudonyme(), PDO::PARAM_STR),
             ":m" => array($mdp->getMotDePasse(), PDO::PARAM_STR)));
@@ -27,7 +22,7 @@ class GatewayCompte
 
     public function modifier(Compte $compteModif)
     {
-        $query = "UPDATE compte SET pseudonyme=:p, motDePasse=:m";
+        $query = "UPDATE Utilisateur SET pseudonyme=:p, motDePasse=:m";
         return $this->conn->executeQuerry($query, array(
             ":p" => array($compteModif->getPseudonyme(), PDO::PARAM_STR),
             ":m" => array($compteModif->getMotDePasse(), PDO::PARAM_STR)));
@@ -36,7 +31,7 @@ class GatewayCompte
 
     public function supprimer(Compte $compteSuppr)
     {
-        $query = "DELETE FROM compte WHERE pseudonyme =:i";
+        $query = "DELETE FROM Utilisateur WHERE pseudonyme =:i";
         return $this->conn->executeQuerry($query, array(
             ":i" => array($compteSuppr->getPseudonyme(), PDO::PARAM_INT)));
     }
@@ -45,7 +40,7 @@ class GatewayCompte
     public function getCompte(string $pseudo) : ?Compte
     {
         $gw = new ListeGateway($this->conn);
-        $query = "SELECT * FROM compte WHERE pseudonyme =:p";
+        $query = "SELECT * FROM Utilisateur WHERE pseudonyme =:p";
         if(!$this->conn->executeQuery($query, [":p" => [$pseudo, PDO::PARAM_STR]]))
         {
             return array();

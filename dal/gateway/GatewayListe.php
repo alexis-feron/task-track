@@ -1,15 +1,9 @@
 <?php
 
-// require tache
-//require todolist
 require_once("dal/gateway/GatewayTache.php");
+require_once("metier/Tache.php");
+require_once("metier/Liste.php");
 
-/*
- supprimerAvecListID -> supprimer
-modiferNomListe -> modifer
-ActualiserListe -> Actualiser
-getListeParID -> getListe
-*/
 class GatewayListe
 {
     private $conn;
@@ -19,9 +13,9 @@ class GatewayListe
         $this->conn = $conn;
     }
 
-    public function inserer(ToDOList $l): bool
+    public function inserer(Liste $l): bool
     {
-        $query = "INSERT INTO List VALUES (:i, :cre, :pu, :li, :n)";
+        $query = "INSERT INTO Liste VALUES (:i, :cre, :pu, :li, :n)";
         return $this->conn->executeQuery($query, array(
             ':i' => array($l->getListId(), PDO::PARAM_INT),
             ':cre' => array($l->getNomPersonne(), PDO::PARAM_STR),
@@ -32,30 +26,30 @@ class GatewayListe
 
     public function supprimer(int $listeId): bool
     {
-        $query = "DELETE FROM List where listeId =:i ";
+        $query = "DELETE FROM Liste where listeId =:i ";
         return $this->conn->executeQuery($query, array(
             ':i' => array($listeId, PDO::PARAM_INT)));
     }
 
     public function modifier(int $id, string $nom) : bool
 	{
-        $query = "UPDATE _TodoList SET nom=:n WHERE listeID=:id";
+        $query = "UPDATE Liste SET nom=:n WHERE listeID=:id";
         return $this->conn->executeQuery($query, array(
             ":n" => array($nom, PDO::PARAM_STR),
             ":id" => array($id, PDO::PARAM_INT)));
     }
 
-    public function Actualiser(ToDOList $l, int $page, int $nbTaches): ToDOList
+    public function Actualiser(Liste $l, int $page, int $nbTaches): Liste
     {
         $gwTache = new GatewayTache($this->conn);
         $l->setTaches($gwTache->getTache($l->getId(), $page, $nbTaches));
         return $l;
     }
 
-    public function getListe(int $id): ToDOList
+    public function getListe(int $id): Liste
     {
         $gwTache = new GatewayTache($this->conn);
-        $query = "SELECT * FROM _TodoList WHERE listeID = :i";
+        $query = "SELECT * FROM List WHERE listeID = :i";
         $isOK = $this->conn->executeQuery($query, array(
             ":i" => array($id, PDO::PARAM_INT)));
         if (!$isOK) {
@@ -66,7 +60,7 @@ class GatewayListe
             throw new Exception("La liste n°$id n'a pas été trouvée ou n'existe pas");
         }
         $liste = $liste[0];
-        return new ToDOList(
+        return new Liste(
             $liste["listeID"],
             $liste["nom"],
             $gwTache->getTache($liste["listeID"], 1, 10)

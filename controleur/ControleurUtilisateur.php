@@ -1,10 +1,5 @@
 <?php
 
-
-//du prof
-
-
-
 class ControleurUtilisateur
 {
     function __construct() {
