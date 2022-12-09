@@ -6,6 +6,24 @@ class ControleurUtilisateur
         global $rep,$vues; // nécessaire pour utiliser variables globales
 // on démarre ou reprend la session si necessaire (préférez utiliser un modèle pour gérer vos session ou cookies)
         session_start();
+/*
+        try{
+            $action = $_REQUEST['action']; //modif action
+            Valider::nettoyerAction(); //à completer
+            switch($action){
+                case NULL:
+                    $this->Reinit() ;
+                    break;
+                case 'connection':
+                    $this->connexion();
+                    break;
+                case
+            }
+        case default:
+            require use['vue'];
+            break;
+        }
+*/
 
 
 //debut
