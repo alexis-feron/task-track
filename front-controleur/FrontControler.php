@@ -6,22 +6,30 @@ require_once("config/Validation.php");
 require("config/config.php");
 
 class FrontControler{
-    private $actions = array(
-        "Utilisateur" => [
-            "ajoutListePriv", "modifierListePriv", "afficherListePriv", "supprimerListePriv",
-            "deconnexion", "supprimerTachePriv", "modifierTachePriv", "modifierTachePriv"
-        ],
-        "Visiteur" => [
-            "seConnecter", "sInscrire", "tacheFaite",
-            "ajoutListePub", "modifierListePub", "afficherListePub", "supprimerListePub",
-            "supprimerTachePub", "modifierTachePub", "modifierTachePub"
-        ]
-    );
-
     public function start(){
+        $action = array(
+            "Utilisateur" => [
+                "deconnexion"
+            ],
+            "Visiteur" => [
+                "seConnecter", "sInscrire",
+                "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
+                "supprimerTache", "modifierTache", "ajouterTache","tacheFaite"
+            ]
+        );
         session_start();
-        $action = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
+        $act = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
+        $utilisateur=modeleConnexion::estConnecte();
         $controleur = new ControleurVisiteur();
+        if(in_array($action['Utilisateur'],$act)) {
+            if ($utilisateur == null) {
+                require("vues/connexion.php");
+            } else{
+                new ControleurUtilisateur();
+            }
+        }else{
+            new ControleurVisiteur();
+        }
         $_REQUEST["action"] = "afficherListePub";
         require("vues/accueil.php");
     }

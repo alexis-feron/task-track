@@ -10,7 +10,6 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Créateur</th>
                 <th>Faite</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
@@ -20,7 +19,6 @@
         <?php foreach($taches as $tache):?>
             <tr>
                 <th><?= $tache->getNom?></th>
-                <th><?= $tache->getCreateur?></th>
                 <th><?= $tache->getFaite?></th>
                 <th><a href="?action=modifierTache"></th>
                 <th><a href="?action=supprimerTache"></th>

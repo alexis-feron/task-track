@@ -17,11 +17,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($toDoLists as $toDoList):?>
+            <?php foreach($listes as $liste):?>
                 <tr>
-                    <th><?= $toDoLists->getNom?></th>
-                    <th><?= $toDoLists->getCreateur?></th>
-                    <th><?= $toDoLists->getPublique?></th>
+                    <th><?= $liste->getNom?></th>
+                    <th><?= $liste->getCreateur?></th>
+                    <th><?= $liste->getPublique?></th>
                     <th><a href="?action=modifierListe"></th>
                     <th><a href="?action=supprimerListe"></th>
                 </tr>
