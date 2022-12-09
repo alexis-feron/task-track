@@ -1,6 +1,8 @@
 <?php
 
 require_once("metier/Tache.php");
+require_once("metier/List.php");
+require_once("dal/gateway/GatewayTache.php");
 
 class GatewayTache
 {

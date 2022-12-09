@@ -1,6 +1,7 @@
 <?php
 
 require_once("dal/gateway/GatewayListe.php");
+require_once("metier/Compte.php");
 
 class GatewayCompte
 {
