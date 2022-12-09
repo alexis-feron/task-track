@@ -1,7 +1,7 @@
 <?php
 
-class modeleConnexion{
-    public function connection(string $login, string $mdp) : Compte
+class modeleVisiteur{
+    public function connexion(string $login, string $mdp) : Compte
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayCompte(new Connexion($dsn, $login, $mdp));
@@ -20,17 +20,7 @@ class modeleConnexion{
         return $compte;
     }
 
-    public function estConnecte() : bool
-    {
-        if(isset($_SESSION["login"]) && !empty($_SESSION["login"]))
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    public function getLists(string $pseudo, int $page, int $nbElements)
+    public function getListes(string $pseudo, int $page, int $nbElements)
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
@@ -47,7 +37,7 @@ class modeleConnexion{
         return $gw->getTache($liste, $page, $nbElements);
     }
 
-    public function createTodoList(string $nom) : bool
+    public function creerListe(string $nom) : bool
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
@@ -63,7 +53,7 @@ class modeleConnexion{
         return $gw->inserer($nom, $pseudo);
     }
 
-    public function createTask(string $nom, string $comm, int $list) : bool
+    public function creerTache(string $nom, string $comm, int $list) : bool
     {
         global $dsn, $login, $mdp;
 
@@ -77,11 +67,18 @@ class modeleConnexion{
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         return $gw->supprimer($listID);
     }
-    public function delTask(int $id) : bool
+
+    public function supprimerTache(int $id) : bool
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
         return $gw->supprimer($id);
     }
 
+    public function tacheFaite(int $id): bool
+    {
+        global $dsn, $login, $mdp;
+        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
+        return $gw->modifier($gw->getTache($id));
+    }
 }

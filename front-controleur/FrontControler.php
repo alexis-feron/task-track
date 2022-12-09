@@ -1,7 +1,7 @@
 <?php
 require_once("controleur/ControleurUtilisateur.php");
 require_once("controleur/ControleurVisiteur.php");
-require_once("modeles/modeleConnexion.php");
+require_once("modeles/modeleUtilisateur.php");
 require_once("config/Validation.php");
 require("config/config.php");
 
@@ -19,7 +19,7 @@ class FrontControler{
         );
         session_start();
         $act = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
-        $utilisateur=modeleConnexion::estConnecte();
+        $utilisateur=modeleUtilisateur::estConnecte();
         $controleur = new ControleurVisiteur();
         if(in_array($action['Utilisateur'],$act)) {
             if ($utilisateur == null) {

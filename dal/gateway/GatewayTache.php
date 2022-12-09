@@ -38,7 +38,7 @@ class GatewayTache
             ':id' => array($id, PDO::PARAM_INT)));
     }
 
-    public function getTache(int $l, int $page, int $nbTache) : iterable
+    public function getTaches(int $l, int $page, int $nbTache) : iterable
     {
         $query = "SELECT * FROM Tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
         if(!$this->conn->executeQuery($query,array(
@@ -65,5 +65,14 @@ class GatewayTache
         return $taches;
     }
 
-
+    public function getTache(int $id)
+    {
+        $query = "SELECT * FROM Tache WHERE listId =:i";
+        if(!$this->conn->executeQuery($query,array(":i" => array($id, PDO::PARAM_INT))))
+        {
+            return array();
+        }
+        $res = $this->conn->getResults();
+        return $res;
+    }
 }
