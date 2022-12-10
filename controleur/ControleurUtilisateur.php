@@ -6,24 +6,39 @@ class ControleurUtilisateur
         global $rep,$vues; // nécessaire pour utiliser variables globales
 // on démarre ou reprend la session si necessaire (préférez utiliser un modèle pour gérer vos session ou cookies)
         session_start();
-/*
-        try{
-            $action = $_REQUEST['action']; //modif action
-            Valider::nettoyerAction(); //à completer
-            switch($action){
-                case NULL:
-                    $this->Reinit() ;
-                    break;
-                case 'connection':
-                    $this->connexion();
-                    break;
-                case
+
+
+
+        function afficherListe()
+        {
+            if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"]))
+            {
+                $page = 1;
             }
-        case default:
-            require use['vue'];
-            break;
+            else
+            {
+                $page = Validation::validerUnIntSupperieurZero($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+            }
+
+            if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"]))
+            {
+                $nbElements = 10;
+            }
+            else
+            {
+                $nbElements = Validation::validerUnIntSupperieurZero($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
+            }
+
+            $mdl = new modelUtilisateur();
+
+            $todoLists = $mdl->getLists(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+
+            $maxPage = $mdl->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
+
+            require("vues/accueil.php");
         }
-*/
+
+
 
 
 //debut
