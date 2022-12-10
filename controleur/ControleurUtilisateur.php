@@ -1,13 +1,29 @@
 <?php
+require_once("config/Validation.php");
+require_once("controleur/ControleurVisiteur.php");
+
 
 class ControleurUtilisateur
 {
-    function __construct() {
-        global $rep,$vues; // nécessaire pour utiliser variables globales
-// on démarre ou reprend la session si necessaire (préférez utiliser un modèle pour gérer vos session ou cookies)
-        session_start();
+    function __construct()
+    {
+        try {
+            $action = $_REQUEST['action']; //modif action
+            Valider::nettoyerAction(); //à completer
+            switch ($action)
+            {
+                case NULL:
+                    $this->Reinit();
+                    break;
+                case 'deconnexion':
+                    $this->deconnexion();
+                    break;
+                default:
+                    throw new Exception("Action inconnue");
+                    break;
 
-
+            }
+        }
 
         function afficherListe()
         {
@@ -17,7 +33,7 @@ class ControleurUtilisateur
             }
             else
             {
-                $page = Validation::validerUnIntSupperieurZero($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+                $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
             }
 
             if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"]))
@@ -26,7 +42,7 @@ class ControleurUtilisateur
             }
             else
             {
-                $nbElements = Validation::validerUnIntSupperieurZero($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
+                $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
             }
 
             $mdl = new modelUtilisateur();
@@ -37,6 +53,8 @@ class ControleurUtilisateur
 
             require("vues/accueil.php");
         }
+
+
 
 
 
