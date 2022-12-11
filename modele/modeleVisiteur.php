@@ -53,6 +53,21 @@ class modeleVisiteur{
         return $gw->inserer($nom, $pseudo);
     }
 
+    public function modifierListe(int $idListe, string $nouveauNom)
+    {
+        global $dsn, $loginDB, $pswdDB;
+        $gw = new ListeGateway(new Connection($dsn, $loginDB, $pswdDB));
+        return $gw->modiferNomListe($idListe, $nouveauNom);
+    }
+
+
+    public function supprimerListe(int $listID) : bool
+    {
+        global $dsn, $login, $mdp;
+        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        return $gw->supprimer($listID);
+    }
+
     public function creerTache(string $nom, string $comm, int $list) : bool
     {
         global $dsn, $login, $mdp;
@@ -61,11 +76,11 @@ class modeleVisiteur{
         return $gw->inserer($nom, $comm, $list);
     }
 
-    public function supprimerListe(int $listID) : bool
+    public function tacheFaite(int $id): bool
     {
         global $dsn, $login, $mdp;
-        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        return $gw->supprimer($listID);
+        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
+        return $gw->modifier($gw->getTache($id));
     }
 
     public function supprimerTache(int $id) : bool
@@ -75,10 +90,4 @@ class modeleVisiteur{
         return $gw->supprimer($id);
     }
 
-    public function tacheFaite(int $id): bool
-    {
-        global $dsn, $login, $mdp;
-        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
-        return $gw->modifier($gw->getTache($id));
-    }
 }

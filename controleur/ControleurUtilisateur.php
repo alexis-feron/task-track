@@ -3,6 +3,7 @@ require_once("config/Validation.php");
 require_once("controleur/ControleurVisiteur.php");
 
 
+
 class ControleurUtilisateur
 {
     function __construct(){
@@ -25,34 +26,17 @@ class ControleurUtilisateur
             require("vues/erreur.php");
         }
 
-        function afficherListe()
+        function deconnexion()
         {
-            if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"]))
-            {
-                $page = 1;
-            }
-            else
-            {
-                $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
-            }
+            $mdl = new ModeleUtilisateur();
 
-            if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"]))
-            {
-                $nbElements = 10;
-            }
-            else
-            {
-                $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
-            }
+            // Destruction de la séssion par le modèle
+            $mdl->destroySession();
 
-            $mdl = new modeleUtilisateur();
-
-            $todoLists = $mdl->getListe(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
-
-            $maxPage = $mdl->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
-
-            require("vues/accueil.php");
+            // Rediréction vers la page de connection
+            new ControleurCommun();
         }
+
 
 //debut
 
