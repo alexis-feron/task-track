@@ -5,13 +5,11 @@ require_once("controleur/ControleurVisiteur.php");
 
 class ControleurUtilisateur
 {
-    function __construct()
-    {
+    function __construct(){
         try {
             $action = $_REQUEST['action']; //modif action
             Valider::nettoyerAction(); //à completer
-            switch ($action)
-            {
+            switch ($action) {
                 case NULL:
                     $this->Reinit();
                     break;
@@ -23,6 +21,8 @@ class ControleurUtilisateur
                     break;
 
             }
+        }catch (Exception $e){
+            require("vues/erreur.php");
         }
 
         function afficherListe()
@@ -45,19 +45,14 @@ class ControleurUtilisateur
                 $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
             }
 
-            $mdl = new modelUtilisateur();
+            $mdl = new modeleUtilisateur();
 
-            $todoLists = $mdl->getLists(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+            $todoLists = $mdl->getListe(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
 
             $maxPage = $mdl->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
 
             require("vues/accueil.php");
         }
-
-
-
-
-
 
 //debut
 
@@ -82,7 +77,7 @@ class ControleurUtilisateur
 //mauvaise action
                 default:
                     $dVueEreur[] =	"Erreur d'appel php";
-                    require ($rep.$vues['vuephp1']);
+                    require ('vues/erreur');
                     break;
             }
 
@@ -90,13 +85,13 @@ class ControleurUtilisateur
         {
             //si erreur BD, pas le cas ici
             $dVueEreur[] =	"Erreur inattendue!!! ";
-            require ($rep.$vues['erreur']);
+            require ('vues/erreur');
 
         }
         catch (Exception $e2)
         {
             $dVueEreur[] =	"Erreur inattendue!!! ";
-            require ($rep.$vues['erreur']);
+            require ('vues/erreur');
         }
 
 
@@ -124,7 +119,7 @@ class ControleurUtilisateur
         $age=$_POST['txtAge'];
         Validation::val_form($nom,$age,$dVueEreur);
 
-        $model = new Simplemodel();
+        $model = new modeleVisiteur();
         $data=$model->get_data();
 
         $dVue = array (
@@ -132,6 +127,6 @@ class ControleurUtilisateur
             'age' => $age,
             'data' => $data,
         );
-        require ($rep.$vues['vuephp1']);
+        require ('vues/erreur');
     }
 }

@@ -66,8 +66,4 @@ class GatewayListe
             $gwTache->getTache($liste["listeID"], 1, 10)
         );
     }
-
-
-
-
 }

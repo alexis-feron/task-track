@@ -6,7 +6,6 @@ class Compte
     private $listes;
     private $motDePasse;
 
-
     public function __construct(string $nom,  iterable $listes = array(), string $motDePasse)
     {
         $this->pseudonyme = $nom;
@@ -44,6 +43,4 @@ class Compte
     {
         $this->listes[] = $l;
     }
-
-
 }
