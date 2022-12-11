@@ -1,8 +1,9 @@
 <?php
-require_once("controleur/ControleurUtilisateur.php");
-require_once("controleur/ControleurVisiteur.php");
-require_once("modeles/modeleUtilisateur.php");
-require_once("config/Validation.php");
+require("config/Validation.php");
+require("controleur/ControleurUtilisateur.php");
+require("controleur/ControleurVisiteur.php");
+require("modele/modeleUtilisateur.php");
+require("modele/modeleVisiteur.php");
 require("config/config.php");
 
 class FrontControler{
@@ -20,15 +21,14 @@ class FrontControler{
         session_start();
         $act = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
         $utilisateur=modeleUtilisateur::estConnecte();
-        $controleur = new ControleurVisiteur();
-        if(in_array($action['Utilisateur'],$act)) {
+        if(in_array($act,$action['Utilisateur'])) {
             if ($utilisateur == null) {
                 require("vues/connexion.php");
             } else{
-                new ControleurUtilisateur();
+                $controleur=new ControleurUtilisateur();
             }
         }else{
-            new ControleurVisiteur();
+            $controleur=new ControleurVisiteur();
         }
         $_REQUEST["action"] = "afficherListePub";
         require("vues/accueil.php");

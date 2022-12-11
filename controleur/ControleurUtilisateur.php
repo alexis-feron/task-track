@@ -1,8 +1,4 @@
 <?php
-require_once("config/Validation.php");
-require_once("controleur/ControleurVisiteur.php");
-
-
 
 class ControleurUtilisateur
 {

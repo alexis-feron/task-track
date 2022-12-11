@@ -1,9 +1,4 @@
 <?php
-require_once("config/Validation.php");
-require_once("modele/modeleUtilisateur.php");
-require_once("modele/modeleVisiteur.php");
-
-
 
 class ControleurVisiteur
 {
@@ -13,7 +8,8 @@ class ControleurVisiteur
 
         try {
             $action = $_REQUEST['action']; //modif action
-            Valider::nettoyerAction(); //à completer
+
+            Validation::nettoyerAction(); //à completer
             switch ($action) {
                 case NULL:
                     $this->Reinit();
