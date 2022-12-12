@@ -39,6 +39,32 @@ class GatewayListe
             ":id" => array($id, PDO::PARAM_INT)));
     }
 
+    public function getListeParNom(int $page, int $nbListes) : array
+    {
+        $gwTache = new GatewayTache($this->conn);
+        $lites = array();
+        $requete = "SELECT * FROM Liste ORDER BY nom  LIMIT :p+:nb, :nb";
+        $isOK=$this->conn->executeQuery($requete, array(
+            ":p" => array($page-1, PDO::PARAM_INT),
+            ":nb" => array($nbListes, PDO::PARAM_INT)));
+        if(!$isOK)
+        {
+            return array();
+        }
+
+        $res = $this->conn->getResults();
+
+        foreach($res as $liste)
+        {
+            $listes[] = new Liste(
+                $liste["listeID"],
+                $liste["nom"],
+                $liste["Createur"],
+                $gwTache->getTachesParIDListe($liste["listeID"], 1, 10));
+        }
+        return $listes;
+    }
+
     public function Actualiser(Liste $l, int $page, int $nbTaches): Liste
     {
         $gwTache = new GatewayTache($this->conn);

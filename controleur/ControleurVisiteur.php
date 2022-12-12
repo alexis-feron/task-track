@@ -1,5 +1,7 @@
 <?php
 
+//http://londres.uca.local/~nosillard/PHP/PHP-ToDo-List/index.php
+
 class ControleurVisiteur
 {
     function __construct()
@@ -9,14 +11,15 @@ class ControleurVisiteur
         try {
             $action = $_REQUEST['action']; //modif action
 
-            Validation::nettoyerAction(); //à completer
+            //Validation::nettoyerAction(); //à completer
             switch ($action) {
                 case NULL:
                     $this->Reinit();
                     break;
-                case 'sInscrire':
+                /*case 'sInscrire':
                     $this->sInscrire();
                     break;
+                */
                 case 'ajoutListe':
                     $this->ajoutListe();
                     break;
@@ -41,7 +44,6 @@ class ControleurVisiteur
                 case 'tacheFaite':
                     $this->tacheFaite();
                     break;
-
                 case 'seConnecter':
                     default:
                         $VueErreur[] =	"Erreur d'appel php";
@@ -64,10 +66,11 @@ class ControleurVisiteur
         }
     }
 
+    /*
     function Reinit() {
         require("vues/accueil.php");
     }
-
+    */
 
     function seConnecter()
     {
@@ -83,20 +86,20 @@ class ControleurVisiteur
         {
             throw new ValueError("veuillez entrer votre login ET votre mot de passe ");
         }
-        $mdl = new modelVisiteur();
+        $mdl = new modeleVisiteur();
         $compte = $mdl->seConnecter($login, $mdp);
         if(!is_null($compte))
         {
             require_once("controleur/ControleurConnecte.php");
             $_REQUEST["action"] = "afficherListe";
-            new modelVisiteur();
+            new modeleUtilisiteur();
         }
         else
         {
             throw new Exception("Erreur lors de la connexion au compte");
         }
     }
-
+/*
     function sInscrire()
     {
         if(!isset($_REQUEST["nom"]))
@@ -147,7 +150,7 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
-
+*/
     function ajoutListe()
     {
         if(!isset($_REQUEST["nomNvleListe"]))
@@ -217,32 +220,52 @@ class ControleurVisiteur
 
     function afficherListe()
     {
+        if(!isset($_REQUEST["liste"]) || empty($_REQUEST["liste"]))
+        {
+            throw new Exception("Aucune liste n'a été renseignée");
+        }
+        if(!Validation::validerIntPossitif($_REQUEST["list"]))
+        {
+            throw new Exception("Valeur illégale de la liste requétée");
+        }
+
+        // TODO: Verifier que c'est bien une liste de l'utilisateur.trice connécté.e
+
+        // Si la page n'est pas set, on prend la première page
         if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"]))
         {
             $page = 1;
         }
         else
         {
+            // si la validation a échouée, on prend la première page
             $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
         }
 
+        // Si le nombre d'élément n'est pas set, on en prend par défaut 10
         if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"]))
         {
             $nbElements = 10;
         }
         else
         {
+            // Par défaut si la validation a échouée on prend 10 éléments
             $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
         }
+        $mdl = new ModelUtilisateur();
 
-        $mdl = new modeleUtilisateur();
+        // Récupération des taches dans le modèle
+        $taches = $mdl->getTaches($_REQUEST["liste"], $page, $nbElements);
 
-        $todoLists = $mdl->getListe(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+        // Définition des variable nécéssaire à la vue.
+        $actualList = $_REQUEST["liste"];
+        $nomListe = $mdl->getNomListe($actualList);
+        $maxPage = $mdl->getMaxPageTaches($actualList, $nbElements);
 
-        $maxPage = $mdl->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
-
-        require("vues/accueil.php");
+        // Affichage de la vue
+        require("vues/editeurDeStatuts.php");
     }
+
 
     function supprimerListe()
     {
@@ -324,15 +347,15 @@ class ControleurVisiteur
 
         if(!isset($_REQUEST["tache"]))
         {
-            throw new Exception("Le parametre task doit exister");
+            throw new Exception("La tache doit exister");
         }
         if(empty($_REQUEST["tache"]))
         {
-            throw new Exception("Le paramètre task doit contenire une valeur");
+            throw new Exception("La tache doit contenire une valeur");
         }
         if(!Validation::validerIntPossitif($_REQUEST["tache"]))
         {
-            throw new Exception("Le parametre task doit être un entier strictement superieur à 0");
+            throw new Exception("L'ID de la tache doit être positif");
         }
 
         // Si le numéro de la liste est pas set, vide ou <=0, on lève une exception
@@ -348,22 +371,15 @@ class ControleurVisiteur
         {
             throw new Exception("Le parametre list doit être un entier strictement superieur à 0");
         }
-
-        // Si le nom est vide ou pas set, on lève une exception
         if(!isset($_REQUEST["nom"]))
         {
-            throw new Exception("Le parametre nom doit exister");
+            throw new Exception("Le nom ne peut pas être vide");
         }
         if(empty($_REQUEST["nom"]))
         {
             throw new Exception("Le paramètre nom doit contenire une valeur");
         }
-
-
-        // Validation des paramètres
         $nom = Validation::nettoyerString($_REQUEST["nom"]);
-
-        // Si un des paramètres est invalide, on lève une exception
         if(is_null($nom))
         {
             throw new Exception("Le nom ou le commentaire contien des valeurs illégales");
@@ -373,12 +389,47 @@ class ControleurVisiteur
         $mdl->modifierNomCommTache($_REQUEST["tache"], $nom);
 
         // Définition des variables nécessaire à la vue
-        $list = $_REQUEST["list"];
+        $liste = $_REQUEST["liste"];
 
         // Rediréction vers l'affichage le la liste list
         $_REQUEST["action"] = "seeList";
         new ControleurVisiteur();
     }
+
+    function TacheFaite()
+    {
+        // estFait doit être un tableau des taches faites
+        if(isset($_REQUEST["estFait"]))
+        {
+            if(!is_array($_REQUEST["estFait"]))
+            {
+                throw new Exception("La liste des taches faites doit être un tableau.");
+            }
+        }
+        else
+        {
+            $_REQUEST["estFait"] = array();
+        }
+
+        // exist contient toute les taches de la page où été l'utilisateur.trice
+        if(!isset($_REQUEST["exist"]))
+        {
+            throw new Exception("Aucune tâche n'est définit");
+        }
+        if(!is_array($_REQUEST["exist"]))
+        {
+            throw new Exception("La liste des taches doit être un tableau.");
+        }
+
+        $mdl = new ModeleVisiteur();
+
+        $list = $mdl->setDoneTaches($_REQUEST["exist"], $_REQUEST["estFait"]);
+
+        $_REQUEST["action"] = "seeList";
+        $_REQUEST["list"] = $list;
+        new ControleurVisiteur();
+    }
+
 
 
     function supprimerTache()

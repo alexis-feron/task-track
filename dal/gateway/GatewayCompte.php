@@ -40,7 +40,7 @@ class GatewayCompte
 
     public function getCompte(string $pseudo) : ?Compte
     {
-        $gw = new ListeGateway($this->conn);
+        $gw = new GatewayListe($this->conn);
         $query = "SELECT * FROM Utilisateur WHERE pseudonyme =:p";
         if(!$this->conn->executeQuery($query, [":p" => [$pseudo, PDO::PARAM_STR]]))
         {

@@ -39,7 +39,7 @@ class Compte
         $this->listes = $listes;
     }
 
-    public function addListe(TodoList $l)
+    public function addListe(Liste $l)
     {
         $this->listes[] = $l;
     }

@@ -27,9 +27,11 @@ class Validation {
             'faite' => $faite
         );
     }
+    /*
     public static function nettoyerAction(){
 
     }
+    */
 }
 ?>
 
