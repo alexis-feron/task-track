@@ -1,5 +1,6 @@
 <?php
-
+require("dal/gateway/GatewayListe.php");
+require("dal/Connexion.php");
 class modeleVisiteur{
     public function connexion(string $login, string $mdp) : Compte
     {

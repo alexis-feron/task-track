@@ -1,14 +1,13 @@
 <?php
 
-require_once("metier/Tache.php");
-require_once("metier/List.php");
-require_once("dal/gateway/GatewayTache.php");
+require("metier/Tache.php");
+require("metier/Liste.php");
 
 class GatewayTache
 {
     private $conn;
 
-    public function __construct(Connection $conn)
+    public function __construct(Connexion $conn)
     {
         $this->conn = $conn;
     }

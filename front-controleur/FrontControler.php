@@ -19,6 +19,7 @@ class FrontControler{
             ]
         );
         session_start();
+        $modele = new modeleVisiteur();
         $action = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
         $utilisateur=modeleUtilisateur::estConnecte();
         if(in_array($action,$actions['Utilisateur'])) {
@@ -30,7 +31,7 @@ class FrontControler{
         }else{
             $controleur=new ControleurVisiteur();
         }
-        $_REQUEST["action"] = "afficherListePub";
+        $_REQUEST["action"] = "afficherListe";
         /*require("vues/accueil.php");*/
     }
 }

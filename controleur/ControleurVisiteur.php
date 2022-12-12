@@ -67,6 +67,32 @@ class ControleurVisiteur
 
 
     function Reinit() {
+        // Si la page n'est pas set, on prend la première page
+        if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"])) {
+            $page = 1;
+        } else {
+            // si la validation a échouée, on prend la première page
+            $page = Validation::validerUnIntSupperieurZero($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+        }
+
+        // Si le nombre d'élément n'est pas set, on en prend par défaut 10
+        if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"])) {
+            $nbElements = 10;
+        } else
+        {
+            // Si la validation a échouée, on prend 10 éléments, sinon, le nombre désiré par l'utilisateur.trice
+            $nbElements = Validation::validerUnIntSupperieurZero($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
+        }
+
+        $modele = new modeleVisiteur();
+
+        // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
+        $todoLists = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+
+        // Récupération du numéro de page le plus grand en fonction des taches de l'utilisateur.trice et du nombre d'éléments demendé
+        $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
+
+        // Affichage de la vue
         require("vues/accueil.php");
     }
 
