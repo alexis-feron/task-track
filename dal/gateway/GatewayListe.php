@@ -60,7 +60,7 @@ class GatewayListe
                 $liste["listeID"],
                 $liste["nom"],
                 $liste["Createur"],
-                $gwTache->getTachesParIDListe($liste["listeID"], 1, 10));
+                $gwTache->getTacheTrie($liste["listeID"], 1, 10));
         }
         return $listes;
     }

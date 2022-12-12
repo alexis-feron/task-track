@@ -16,17 +16,6 @@ class Validation {
         return filter_var($valeur, FILTER_VALIDATE_REGEXP, array("option" => array("regexp" => "$nom-[1-9][0-9]+$")));
     }
 */
-    public static function nettoyerEtValiderTache(string $nom, bool $faite){
-        $nom = self::nettoyerString($nom);
-        $faiteValide = self::validerTacheEffectuee($faite);
-        if($nom == null || !$faiteValide){
-            throw new UnexpectedValueException("Une des valeurs de $nom n'est pas correcte.");
-        }
-        return array(
-            'nom' => $nom,
-            'faite' => $faite
-        );
-    }
     /*
     public static function nettoyerAction(){
 

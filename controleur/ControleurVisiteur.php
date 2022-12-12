@@ -90,7 +90,7 @@ class ControleurVisiteur
         $compte = $mdl->seConnecter($login, $mdp);
         if(!is_null($compte))
         {
-            require_once("controleur/ControleurConnecte.php");
+            require_once("controleur/ControleurUtilisateur.php.php");
             $_REQUEST["action"] = "afficherListe";
             new modeleUtilisiteur();
         }

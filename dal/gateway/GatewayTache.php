@@ -38,7 +38,7 @@ class GatewayTache
             ':id' => array($id, PDO::PARAM_INT)));
     }
 
-    public function getTachetrie(int $l, int $page, int $nbTache) : iterable //renvoie les taches de l trié par nom
+    public function getTacheTrie(int $l, int $page, int $nbTache) : iterable //renvoie les taches de l trié par nom
     {
         $query = "SELECT * FROM Tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
         if(!$this->conn->executeQuery($query,array(
