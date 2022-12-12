@@ -7,7 +7,14 @@ class ControleurVisiteur
     function __construct()
     {
         try {
-            $action=Validation::nettoyerString($_REQUEST["action"]);
+            if(!isset($_REQUEST["action"]))
+            {
+                $action = NULL;
+            }
+            else
+            {
+                $action = Validation::nettoyerString($_REQUEST["action"]);
+            }
             switch ($action) {
                 case NULL:
                     $this->Reinit();
