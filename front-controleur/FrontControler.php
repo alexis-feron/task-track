@@ -13,7 +13,7 @@ class FrontControler{
                 "deconnexion"
             ],
             "Visiteur" => [
-                "seConnecter", "sInscrire",
+                "seConnecter", /*"sInscrire",*/ "accueil",
                 "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
                 "supprimerTache", "modifierTache", "ajouterTache","tacheFaite"
             ]
@@ -31,6 +31,6 @@ class FrontControler{
             $controleur=new ControleurVisiteur();
         }
         $_REQUEST["action"] = "afficherListePub";
-        require("vues/accueil.php");
+        /*require("vues/accueil.php");*/
     }
 }
