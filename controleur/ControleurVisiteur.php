@@ -79,7 +79,7 @@ class ControleurVisiteur
             $page = 1;
         } else {
             // si la validation a échouée, on prend la première page
-            $page = Validation::validerUnIntSupperieurZero($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+            $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
         }
 
         // Si le nombre d'élément n'est pas set, on en prend par défaut 10
@@ -88,7 +88,7 @@ class ControleurVisiteur
         } else
         {
             // Si la validation a échouée, on prend 10 éléments, sinon, le nombre désiré par l'utilisateur.trice
-            $nbElements = Validation::validerUnIntSupperieurZero($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
+            $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
         }
 
         $modele = new modeleVisiteur();
