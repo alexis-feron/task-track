@@ -1,6 +1,6 @@
 <?php
-
-class ControleurUtilisateur
+require("controleur/ControleurVisiteur.php");
+class ControleurUtilisateur extends ControleurVisiteur
 {
     function __construct()
     {

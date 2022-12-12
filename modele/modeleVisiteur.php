@@ -21,12 +21,21 @@ class modeleVisiteur{
         return $compte;
     }
 
-    public function getListes(string $pseudo, int $page, int $nbElements)
+    public function estConnecte() : bool
+    {
+        if(isset($_SESSION["login"]) && !empty($_SESSION["login"]))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function getListes(int $page, int $nbElements)
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
 
-        return $gw->getListe($page, $nbElements, $pseudo);
+        return $gw->getListe($page, $nbElements);
     }
 
     public function getTaches(int $liste, int $page, int $nbElements)

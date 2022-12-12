@@ -93,11 +93,14 @@ class ControleurVisiteur
 
         $modele = new modeleVisiteur();
 
-        // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
-        $todoLists = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
-
-        // Récupération du numéro de page le plus grand en fonction des taches de l'utilisateur.trice et du nombre d'éléments demendé
-        $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
+        if(modeleVisiteur::estConnecte()) {
+            // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
+            $listes = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+            $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
+        }else {
+            $listes = $modele->getListes($page, $nbElements);
+            $maxPage = $modele->getMaxPageListes();
+        }
 
         // Affichage de la vue
         require("vues/accueil.php");

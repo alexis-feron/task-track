@@ -1,9 +1,7 @@
 <?php
 require("config/Validation.php");
 require("controleur/ControleurUtilisateur.php");
-require("controleur/ControleurVisiteur.php");
 require("modele/modeleUtilisateur.php");
-require("modele/modeleVisiteur.php");
 require("config/config.php");
 
 class FrontControler{
