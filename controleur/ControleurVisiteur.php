@@ -6,12 +6,8 @@ class ControleurVisiteur
 {
     function __construct()
     {
-        global $rep,$vues; // nécessaire pour utiliser variables globales
-
         try {
-            $action = $_REQUEST['action']; //modif action
-
-            //Validation::nettoyerAction(); //à completer
+            $action=Validation::nettoyerString($_REQUEST['action']);
             switch ($action) {
                 case NULL:
                     $this->Reinit();
@@ -32,6 +28,9 @@ class ControleurVisiteur
                 case 'supprimerListe':
                     $this->supprimerListe();
                     break;
+                case 'accueil':
+                    require("vues/accueil.php");
+                    break;
                 case 'supprimerTache':
                     $this->supprimerTache();
                     break;
@@ -46,7 +45,7 @@ class ControleurVisiteur
                     break;
                 case 'seConnecter':
                     default:
-                        $VueErreur[] =	"Erreur d'appel php";
+                        $VueErreur[] ="Erreur d'appel php";
                     require("vues/connexion.php");
                     break;
             }
@@ -56,21 +55,21 @@ class ControleurVisiteur
         {
             //si erreur BD, pas le cas ici
             $VueErreur[] =	"Erreur inattendue!!! ";
-            require ($rep.$vues['vues/erreur.php']);
+            require ('vues/erreur.php');
 
         }
         catch (Exception $e2)
         {
             $VueErreur[] =	"Erreur inattendue!!! ";
-            require ($rep.$vues['vues/erreur.php']);
+            require ('vues/erreur.php');
         }
     }
 
-    /*
+
     function Reinit() {
         require("vues/accueil.php");
     }
-    */
+
 
     function seConnecter()
     {
@@ -92,7 +91,7 @@ class ControleurVisiteur
         {
             require_once("controleur/ControleurUtilisateur.php.php");
             $_REQUEST["action"] = "afficherListe";
-            new modeleUtilisiteur();
+            new modeleUtilisateur();
         }
         else
         {
@@ -252,7 +251,7 @@ class ControleurVisiteur
             // Par défaut si la validation a échouée on prend 10 éléments
             $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
         }
-        $mdl = new ModelUtilisateur();
+        $mdl = new ModeleUtilisateur();
 
         // Récupération des taches dans le modèle
         $taches = $mdl->getTaches($_REQUEST["liste"], $page, $nbElements);
@@ -333,7 +332,7 @@ class ControleurVisiteur
         }
 
         // Création de la tache par le modèle
-        $mdl->createTask($nom, $list);
+        $mdl->creerTache($nom, $list);
 
         $_REQUEST["action"] = "seeList";
         $_REQUEST["list"] = $list;
