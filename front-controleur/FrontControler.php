@@ -8,7 +8,7 @@ require("config/config.php");
 
 class FrontControler{
     public function start(){
-        $action = array(
+        $actions = array(
             "Utilisateur" => [
                 "deconnexion"
             ],
@@ -19,9 +19,9 @@ class FrontControler{
             ]
         );
         session_start();
-        $act = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
+        $action = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
         $utilisateur=modeleUtilisateur::estConnecte();
-        if(in_array($act,$action['Utilisateur'])) {
+        if(in_array($action,$actions['Utilisateur'])) {
             if ($utilisateur == null) {
                 require("vues/connexion.php");
             } else{
