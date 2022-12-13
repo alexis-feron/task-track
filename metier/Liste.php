@@ -6,14 +6,16 @@ class Liste
     private $createur;
     private $id;
     private $taches;
+    private $publique;
 
 
-    public function __construct(int $id, string $nom, string $createur, iterable $taches)
+    public function __construct(int $id, string $nom, string $createur,bool $publique, iterable $taches)
     {
         $this->nom = $nom;
         $this->createur = $createur;
         $this->id = $id;
         $this->taches = $taches;
+        $this->publique=$publique;
     }
 
     public function getNom() : string
@@ -41,6 +43,10 @@ class Liste
     public function addTache(Tache $t)
     {
         $this->taches[] = $t;
+    }
+    public function getPublique()
+    {
+        return $this->publique;
     }
 
 }

@@ -17,14 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            <?php if(isset($listes)) : ?>
+            <?php $listes[]=new Liste(15,'re','a',true,[]); if(isset($listes)) : ?>
                 <?php foreach($listes as $liste):?>
                     <tr>
                         <th><?= $liste->getNom()?></th>
                         <th><?= $liste->getCreateur()?></th>
                         <th><?= $liste->getPublique()?></th>
-                        <th><a href="?action=modifierListe"></th>
-                        <th><a href="?action=supprimerListe"></th>
+                        <th><input value="Modifier" type="button"></th>
+                        <th><input value="Supprimer" type="button"></th>
                     </tr>
                 <?php endforeach;?>
             <?php endif;?>
