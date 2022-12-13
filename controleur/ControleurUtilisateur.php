@@ -29,9 +29,10 @@ class ControleurUtilisateur extends ControleurVisiteur
         $mdl = new ModeleUtilisateur();
 
         // Destruction de la séssion par le modèle
-        $mdl->destroySession();
+        $mdl->deconnexion();
 
         // Rediréction vers la page de connection
         new ControleurVisiteur();
+
     }
 }

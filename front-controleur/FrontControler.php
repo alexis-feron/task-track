@@ -11,7 +11,7 @@ class FrontControler{
                 "deconnexion"
             ],
             "Visiteur" => [
-                "seConnecter", /*"sInscrire",*/ "accueil",
+                "seConnecter", /*"sInscrire",*/ "accueil", "connexionEnCours",
                 "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
                 "supprimerTache", "modifierTache", "ajouterTache","tacheFaite"
             ]
@@ -23,6 +23,7 @@ class FrontControler{
         if(in_array($action,$actions['Utilisateur'])) {
             if ($utilisateur == null) {
                 require("vues/connexion.php");
+                echo "<br>ERREUR : Vous n'êtes pas connecté, veuillez vous connecter pour accèder à cette fonctionnalité";
             } else{
                 $controleur=new ControleurUtilisateur();
             }

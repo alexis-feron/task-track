@@ -6,20 +6,20 @@
 </head>
 <body>
     <?php require("barreNav.php") ?>
-    <form method="post" action="">
+    <form method="post" action="?action=connexionEnCours">
         <table>
             <tr>
-                <th>Email</th>
-                <td><input type="email"></td>
+                <th>Login</th>
+                <td><input type="login" name="pseudonyme"></td>
             </tr>
             <tr>
                 <th>Mot de passe</th>
-                <td><input type="password"></td>
+                <td><input type="password" name="motDePasse"></td>
             </tr>
             </tbody>
         </table>
         <input value="Annuler" type="reset">
-        <input value="Se connecter" type="submit">
+        <input value="Se connecter" type="submit" name="connexionEnCours">
     </form>
 </body>
 </html>

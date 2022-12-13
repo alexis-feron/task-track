@@ -7,7 +7,7 @@ class GatewayCompte
 {
     private $conn;
 
-    public function __construct($conn)
+    public function __construct(Connexion $conn)
     {
         $this->conn = $conn;
     }

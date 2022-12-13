@@ -51,9 +51,12 @@ class ControleurVisiteur
                 case 'tacheFaite':
                     $this->tacheFaite();
                     break;
+                case 'connexionEnCours':
+                    $this->seConnecter();
+                    break;
                 case 'seConnecter':
-                    default:
-                        $VueErreur[] ="Erreur d'appel php";
+                default:
+                    $VueErreur[] ="Erreur d'appel php";
                     require("vues/connexion.php");
                     break;
             }
@@ -120,73 +123,73 @@ class ControleurVisiteur
 
         if(is_null($login) || is_null($mdp))
         {
-            throw new ValueError("veuillez entrer votre login ET votre mot de passe ");
+            throw new ValueError("Veuillez entrer votre login ET votre mot de passe ");
         }
         $mdl = new modeleVisiteur();
-        $compte = $mdl->seConnecter($login, $mdp);
+        $compte = $mdl->connexion($login, $mdp);
         if(!is_null($compte))
         {
-            require_once("controleur/ControleurUtilisateur.php.php");
+            require_once("controleur/ControleurUtilisateur.php");
             $_REQUEST["action"] = "afficherListe";
-            new modeleUtilisateur();
+            $modele=new modeleUtilisateur();
         }
         else
         {
             throw new Exception("Erreur lors de la connexion au compte");
         }
     }
-/*
-    function sInscrire()
-    {
-        if(!isset($_REQUEST["nom"]))
+    /*
+        function sInscrire()
         {
-            throw new Exception("Le pseudonyme doit être renseigné");
-        }
-        if(empty($_REQUEST["nom"]))
-        {
-            throw new Exception("Le pseudonyme renseigné est nul");
-        }
-        if(strlen($_REQUEST["nom"]) < 5)
-        {
-            throw new Exception("Le pseudonyme doit contenir au minimum 5 caractères");
-        }
+            if(!isset($_REQUEST["nom"]))
+            {
+                throw new Exception("Le pseudonyme doit être renseigné");
+            }
+            if(empty($_REQUEST["nom"]))
+            {
+                throw new Exception("Le pseudonyme renseigné est nul");
+            }
+            if(strlen($_REQUEST["nom"]) < 5)
+            {
+                throw new Exception("Le pseudonyme doit contenir au minimum 5 caractères");
+            }
 
 
-        if(!isset($_REQUEST["mdp1"]))
-        {
-            throw new Exception("Le mot de passe n'a pas été envoyé au serveur");
-        }
-        if(empty($_REQUEST["mdp1"]))
-        {
-            throw new Exception("Le mot de passe renseigné est nul");
-        }
-        if(strlen($_REQUEST["mdp1"]) < 8)
-        {
-            throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
-        }
-        if($_REQUEST["mdp1"] != $_REQUEST["mdp2"])
-        {
-            throw new Exception("Les mots de passes sont différents");
+            if(!isset($_REQUEST["mdp1"]))
+            {
+                throw new Exception("Le mot de passe n'a pas été envoyé au serveur");
+            }
+            if(empty($_REQUEST["mdp1"]))
+            {
+                throw new Exception("Le mot de passe renseigné est nul");
+            }
+            if(strlen($_REQUEST["mdp1"]) < 8)
+            {
+                throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
+            }
+            if($_REQUEST["mdp1"] != $_REQUEST["mdp2"])
+            {
+                throw new Exception("Les mots de passes sont différents");
+            }
+
+            $pseudo = Validation::nettoyerString($_REQUEST["nom"]);
+
+            if(is_null($pseudo))
+            {
+                throw new Exception("Le pseudonyme est nul");
+            }
+            $mdl = new ModeleUtilisateur();
+            if(!$mdl->sInscrire($pseudo, $_REQUEST["mdp1"]))
+            {
+                throw new Exception("Erreur lors de l'inscription");
+            }
+            $_REQUEST["action"] = "seConnecter";
+            $_REQUEST["pseudonyme"] = $pseudo;
+            $_REQUEST["motDePasse"] = $_REQUEST["mdp1"];
+            new ControleurVisiteur();
         }
 
-        $pseudo = Validation::nettoyerString($_REQUEST["nom"]);
-
-        if(is_null($pseudo))
-        {
-            throw new Exception("Le pseudonyme est nul");
-        }
-        $mdl = new ModeleUtilisateur();
-        if(!$mdl->sInscrire($pseudo, $_REQUEST["mdp1"]))
-        {
-            throw new Exception("Erreur lors de l'inscription");
-        }
-        $_REQUEST["action"] = "seConnecter";
-        $_REQUEST["pseudonyme"] = $pseudo;
-        $_REQUEST["motDePasse"] = $_REQUEST["mdp1"];
-        new ControleurVisiteur();
-    }
-
-*/
+    */
     function ajoutListe()
     {
         if(!isset($_REQUEST["nomNvleListe"]))
