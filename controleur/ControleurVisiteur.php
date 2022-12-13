@@ -1,6 +1,7 @@
 <?php
 
 //http://londres.uca.local/~nosillard/PHP/PHP-ToDo-List/index.php
+//http://londres.uca.local/phpmyadmin/
 
 class ControleurVisiteur
 {

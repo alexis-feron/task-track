@@ -17,15 +17,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($listes as $liste):?>
-                <tr>
-                    <th><?= $liste->getNom()?></th>
-                    <th><?= $liste->getCreateur()?></th>
-                    <th><?= $liste->getPublique()?></th>
-                    <th><a href="?action=modifierListe"></th>
-                    <th><a href="?action=supprimerListe"></th>
-                </tr>
-            <?php endforeach;?>
+            <?php if(isset($listes)) : ?>
+                <?php foreach($listes as $liste):?>
+                    <tr>
+                        <th><?= $liste->getNom()?></th>
+                        <th><?= $liste->getCreateur()?></th>
+                        <th><?= $liste->getPublique()?></th>
+                        <th><a href="?action=modifierListe"></th>
+                        <th><a href="?action=supprimerListe"></th>
+                    </tr>
+                <?php endforeach;?>
+            <?php endif;?>
         </tbody>
     </table>
 </body>
