@@ -97,7 +97,7 @@ class ControleurVisiteur
 
         $modele = new modeleVisiteur();
 
-        if(modeleVisiteur::estConnecte()) {
+        if($modele->estConnecte()) {
             // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
             $listes = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
             $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
@@ -251,7 +251,7 @@ class ControleurVisiteur
         $mdl->modifierNomListe($_REQUEST["liste"], $nouveauNom);
 
         /*
-        // Rediréction vers l'accueil
+        // Redirection vers l'accueil
         $_REQUEST["action"] = "seeLists";
         */
         new ControleurVisiteur();
@@ -462,7 +462,7 @@ class ControleurVisiteur
 
         $mdl = new ModeleVisiteur();
 
-        $list = $mdl->setDoneTaches($_REQUEST["exist"], $_REQUEST["estFait"]);
+        $list = $mdl->tacheFaite($_REQUEST["tache"]);
 
         $_REQUEST["action"] = "seeList";
         $_REQUEST["list"] = $list;

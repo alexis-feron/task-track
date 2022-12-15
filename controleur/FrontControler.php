@@ -19,7 +19,7 @@ class FrontControler{
         session_start();
         $modele = new modeleVisiteur();
         $action = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
-        $utilisateur=modeleUtilisateur::estConnecte();
+        $utilisateur=$modele->estConnecte();
         if(in_array($action,$actions['Utilisateur'])) {
             if ($utilisateur == null) {
                 require("vues/connexion.php");

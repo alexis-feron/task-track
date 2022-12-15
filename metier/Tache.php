@@ -8,10 +8,10 @@ class Tache
     private $listeID;
 
     // Constructeur
-    public function __construct(string $nom, bool $estFait=false, int $tacheID, int $listeID)
+    public function __construct(string $nom, int $tacheID, int $listeID)
     {
         $this->nom = $nom;
-        $this->fait = $estFait;
+        $this->fait = false;
         $this->id = $tacheID;
         $this->listeID = $listeID;
     }

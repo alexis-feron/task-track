@@ -59,7 +59,7 @@ class GatewayListe
                 $liste["id"],
                 $liste["nom"],
                 $liste["createur"],
-                $liste["punlique"],
+                $liste["publique"],
                 $gwTache->getTacheTrie($liste["listeID"], 1, 10));
         }
         return $listes;
@@ -93,5 +93,31 @@ class GatewayListe
             $liste["punlique"],
             $gwTache->getTacheTrie($liste["listeID"], 1, 10)
         );
+    }
+    public function getListeParCreateur(int $page, int $nbListes, Compte $compte) : array
+    {
+        $gwTache = new GatewayTache($this->conn);
+        $listes = array();
+        $requete = "SELECT * FROM Liste ORDER BY nom LIMIT :p+:nb, :nb";
+        $isOK=$this->conn->executeQuery($requete, array(
+            ":p" => array($page-1, PDO::PARAM_INT),
+            ":nb" => array($nbListes, PDO::PARAM_INT)));
+        if(!$isOK)
+        {
+            return array();
+        }
+
+        $res = $this->conn->getResults();
+
+        foreach($res as $liste)
+        {
+            $listes[] = new Liste(
+                $liste["id"],
+                $liste["nom"],
+                $liste["createur"],
+                $liste["publique"],
+                $gwTache->getTacheTrie($liste["listeID"], 1, 10));
+        }
+        return $listes;
     }
 }

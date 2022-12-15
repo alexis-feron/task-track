@@ -6,10 +6,14 @@ class Compte
     private $listes;
     private $motDePasse;
 
-    public function __construct(string $nom,  iterable $listes = array(), string $motDePasse)
+    public function __construct(string $nom,  iterable $listes, string $motDePasse)
     {
         $this->pseudonyme = $nom;
-        $this->listes = $listes;
+        if(!isset($listes)){
+            $this->listes = array();
+        }else {
+            $this->listes = $listes;
+        }
         $this->motDePasse = $motDePasse;
     }
 

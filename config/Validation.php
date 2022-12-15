@@ -16,11 +16,11 @@ class Validation {
         return filter_var($valeur, FILTER_VALIDATE_REGEXP, array("option" => array("regexp" => "$nom-[1-9][0-9]+$")));
     }
 */
-    /*
+
     public static function nettoyerAction(){
 
     }
-    */
+
 }
 ?>
 
