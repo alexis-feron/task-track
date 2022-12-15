@@ -8,8 +8,8 @@
     <?php require("barreNav.php") ?>
     <h1>Erreur</h1>
     <?php
-        if (isset($dVueEreur)) {
-            foreach ($dVueEreur as $value){
+        if (isset($VueErreur)) {
+            foreach ($VueErreur as $value){
                 echo $value;
             }
         }

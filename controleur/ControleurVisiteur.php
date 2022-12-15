@@ -64,14 +64,14 @@ class ControleurVisiteur
         }
         catch (PDOException $e)
         {
-            //si erreur BD, pas le cas ici
-            $VueErreur[] =	"Erreur inattendue!!! ";
+            // Si erreur BD
+            $VueErreur[] =	"Erreur avec la base de données ";
             require ('vues/erreur.php');
 
         }
         catch (Exception $e2)
         {
-            $VueErreur[] =	"Erreur inattendue!!! ";
+            $VueErreur[] =	"Erreur inattendue ";
             require ('vues/erreur.php');
         }
     }
@@ -82,7 +82,7 @@ class ControleurVisiteur
         if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"])) {
             $page = 1;
         } else {
-            // si la validation a échouée, on prend la première page
+            // Si la validation a échouée, on prend la première page
             $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
         }
 
