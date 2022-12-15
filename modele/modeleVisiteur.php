@@ -63,14 +63,6 @@ class modeleVisiteur{
         return $gw->inserer($nom, $pseudo);
     }
 
-    public function modifierListe(int $idListe, string $nouveauNom)
-    {
-        global $dsn, $loginDB, $pswdDB;
-        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
-        return $gw->modifierNomListe($idListe, $nouveauNom);
-    }
-
-
     public function supprimerListe(int $listID) : bool
     {
         global $dsn, $login, $mdp;
@@ -100,11 +92,29 @@ class modeleVisiteur{
         return $gw->supprimer($id);
     }
 
-    public function modifierNomTache(int $idListe, string $nouveauNom)
+    public function modifierNomTache(int $id, string $nouveauNom)
     {
         global $dsn, $loginDB, $pswdDB;
         $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
-        return $gw->modifierNomTache($idListe, $nouveauNom);
+        $gw->modifier($id, $nouveauNom);
+    }
+    public function modifierNomListe(int $id, string $nouveauNom){
+        global $dsn, $login, $mdp;
+        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        $gw->modifier($id, $nouveauNom);
+
+    }
+    public function getMaxPageListes()
+    {
+
+    }
+    public function getNomListe()
+    {
+
+    }
+    public function getMaxPageTaches()
+    {
+
     }
 
 }
