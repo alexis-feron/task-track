@@ -22,12 +22,12 @@ class GatewayTache
             ':i' => array($listeId, PDO::PARAM_INT)));
     }
 
-    public function modifier(Tache $tacheAModifier)
+    public function modifier(int $id,string $nvnom)
     {
-        $query = "UPDATE Tache SET nom = :n, faite = :f WHERE id = :i";
+        $query = "UPDATE Tache SET nom = :n WHERE id = :i";
         return $this->conn->executeQuery($query,array(
-            ':n' => array($tacheAModifier->getNom(), PDO::PARAM_STR),
-            ':fait' => array($tacheAModifier->estFait(), PDO::PARAM_BOOL)));
+            ':n' => array($nvnom, PDO::PARAM_STR),
+            ':i' => array($id, PDO::PARAM_BOOL)));
     }
 
     public function supprimer(int $id)
@@ -53,9 +53,8 @@ class GatewayTache
         foreach($res as $tache)
         {
             $taches[] = new Tache(
-                $tache["NomTache"],
-                $tache["TacheFaite"],
-                $tache["tacheID"],
+                $tache["Id"],
+                $tache["Nom"],
                 $tache["listeID"]
             );
         }
