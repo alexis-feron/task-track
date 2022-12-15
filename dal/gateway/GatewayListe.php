@@ -15,25 +15,24 @@ class GatewayListe
 
     public function inserer(Liste $l): bool
     {
-        $query = "INSERT INTO Liste VALUES (:i, :cre, :pu, :li, :n)";
+        $query = "INSERT INTO Liste VALUES (:i, :cre, :pu, :n)";
         return $this->conn->executeQuery($query, array(
-            ':i' => array($l->getListId(), PDO::PARAM_INT),
-            ':cre' => array($l->getNomPersonne(), PDO::PARAM_STR),
-            ':pu' => array($l->getPublic(), PDO::PARAM_STR),
-            ':li' => array($l->getTache(), PDO::PARAM_INT),
-            ':n' => array($l->getNomListe()), PDO::PARAM_STR));
+            ':i' => array($l->getId(), PDO::PARAM_INT),
+            ':cre' => array($l->getCreateur(), PDO::PARAM_STR),
+            ':pu' => array($l->getPublique(), PDO::PARAM_STR),
+            ':n' => array($l->getNom()), PDO::PARAM_STR));
     }
 
     public function supprimer(int $listeId): bool
     {
-        $query = "DELETE FROM Liste where listeId =:i ";
+        $query = "DELETE FROM Liste where id =:i ";
         return $this->conn->executeQuery($query, array(
             ':i' => array($listeId, PDO::PARAM_INT)));
     }
 
     public function modifier(int $id, string $nom) : bool
 	{
-        $query = "UPDATE Liste SET nom=:n WHERE listeID=:id";
+        $query = "UPDATE Liste SET nom=:n WHERE id=:id";
         return $this->conn->executeQuery($query, array(
             ":n" => array($nom, PDO::PARAM_STR),
             ":id" => array($id, PDO::PARAM_INT)));
@@ -57,9 +56,10 @@ class GatewayListe
         foreach($res as $liste)
         {
             $listes[] = new Liste(
-                $liste["listeID"],
+                $liste["id"],
                 $liste["nom"],
-                $liste["Createur"],
+                $liste["createur"],
+                $liste["punlique"],
                 $gwTache->getTacheTrie($liste["listeID"], 1, 10));
         }
         return $listes;
@@ -68,14 +68,14 @@ class GatewayListe
     public function Actualiser(Liste $l, int $page, int $nbTaches): Liste
     {
         $gwTache = new GatewayTache($this->conn);
-        $l->setTaches($gwTache->getTache($l->getId(), $page, $nbTaches));
+        $l->setTaches($gwTache->getTache($l->getId()));
         return $l;
     }
 
     public function getListe(int $id): Liste
     {
         $gwTache = new GatewayTache($this->conn);
-        $query = "SELECT * FROM List WHERE listeID = :i";
+        $query = "SELECT * FROM List WHERE id = :i";
         $isOK = $this->conn->executeQuery($query, array(
             ":i" => array($id, PDO::PARAM_INT)));
         if (!$isOK) {
@@ -87,9 +87,11 @@ class GatewayListe
         }
         $liste = $liste[0];
         return new Liste(
-            $liste["listeID"],
+            $liste["id"],
             $liste["nom"],
-            $gwTache->getTache($liste["listeID"], 1, 10)
+            $liste["createur"],
+            $liste["punlique"],
+            $gwTache->getTacheTrie($liste["listeID"], 1, 10)
         );
     }
 }

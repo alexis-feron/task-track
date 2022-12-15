@@ -362,7 +362,7 @@ class ControleurVisiteur
         }
 
         // Validation des paramètres
-        $list = Validation::validerIntPossitif($_REQUEST["list"]) ? $_REQUEST["list"] : null;
+        $list = Validation::validerIntPossitif($_REQUEST["liste"]) ? $_REQUEST["liste"] : null;
         $nom = Validation::nettoyerString($_REQUEST["nomTache"]);
 
         // Verification des paramètre, si il y en a 1 qui vas pas, on lève une exception
@@ -425,7 +425,7 @@ class ControleurVisiteur
         }
 
         // Modification de la tache par le modèle
-        $mdl->modifierNomCommTache($_REQUEST["tache"], $nom);
+        $mdl->modifierNomTache($_REQUEST["tache"], $nom);
 
         // Définition des variables nécessaire à la vue
         $liste = $_REQUEST["liste"];

@@ -25,12 +25,10 @@ class FrontControler{
                 require("vues/connexion.php");
                 echo "<br>ERREUR : Vous n'êtes pas connecté, veuillez vous connecter pour accèder à cette fonctionnalité";
             } else{
-                $controleur=new ControleurUtilisateur();
+                new ControleurUtilisateur();
             }
         }else{
-            $controleur=new ControleurVisiteur();
+            new ControleurVisiteur();
         }
-        $_REQUEST["action"] = "afficherListe";
-        /*require("vues/accueil.php");*/
     }
 }

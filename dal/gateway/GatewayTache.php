@@ -32,14 +32,14 @@ class GatewayTache
 
     public function supprimer(int $id)
     {
-        $query = "DELETE FROM Tache WHERE tacheId =:id";
+        $query = "DELETE FROM Tache WHERE id =:id";
         return $this->conn->executeQuery($query,array(
             ':id' => array($id, PDO::PARAM_INT)));
     }
 
     public function getTacheTrie(int $l, int $page, int $nbTache) : iterable //renvoie les taches de l trié par nom
     {
-        $query = "SELECT * FROM Tache WHERE listId =:i ORDER BY DateCreation DESC LIMIT :p, :n";
+        $query = "SELECT * FROM Tache WHERE listeId =:i LIMIT :p, :n";
         if(!$this->conn->executeQuery($query,array(
             ":i" => array($l, PDO::PARAM_INT),
             ":p" => array(($page-1)*$nbTache, PDO::PARAM_INT),
@@ -56,7 +56,7 @@ class GatewayTache
                 $tache["NomTache"],
                 $tache["TacheFaite"],
                 $tache["tacheID"],
-                $tache["listID"]
+                $tache["listeID"]
             );
         }
         return $taches;
@@ -64,7 +64,7 @@ class GatewayTache
 
     public function getTache(int $id)
     {
-        $query = "SELECT * FROM Tache WHERE listId =:i";
+        $query = "SELECT * FROM Tache WHERE listeId =:i";
         if(!$this->conn->executeQuery($query,array(":i" => array($id, PDO::PARAM_INT))))
         {
             return array();
