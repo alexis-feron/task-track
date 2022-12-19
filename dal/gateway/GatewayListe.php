@@ -23,6 +23,17 @@ class GatewayListe
             ':n' => array($l->getNom()), PDO::PARAM_STR));
     }
 
+    public function inserer2(string $nom, string $createur) : bool
+    {
+        $requette = "INSERT INTO Liste (nom, createur) VALUES(:n, :c)";
+        return $this->conn->executeQuery($requette, [
+            ":n" => [$nom, PDO::PARAM_STR],
+            ":c" => [$createur, PDO::PARAM_STR]
+        ]);
+
+    }
+
+
     public function supprimer(int $listeId): bool
     {
         $query = "DELETE FROM Liste where id =:i ";

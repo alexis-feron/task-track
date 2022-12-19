@@ -58,9 +58,9 @@ class modeleVisiteur{
         $pseudo = Validation::nettoyerString($_SESSION["login"]);
         if(is_null($pseudo))
         {
-            throw new Exception("Erreur avec la valeur enregistré du pseudonyme");
+            throw new Exception("Erreur avec le pseudo");
         }
-        return $gw->inserer($nom, $pseudo);
+        return $gw->inserer2($nom, $pseudo);
     }
 
     public function supprimerListe(int $listID) : bool
