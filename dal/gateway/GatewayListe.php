@@ -106,9 +106,7 @@ class GatewayListe
         {
             return array();
         }
-
         $res = $this->conn->getResults();
-
         foreach($res as $liste)
         {
             $listes[] = new Liste(
@@ -116,8 +114,20 @@ class GatewayListe
                 $liste["nom"],
                 $liste["createur"],
                 $liste["publique"],
-                $gwTache->getTacheTrie($liste["listeID"], 1, 10));
+                $gwTache->getTacheTrie($liste["id"], 1, 10));
         }
         return $listes;
     }
+
+    public function getNbListesParCreateur(string $createur): int
+    {
+        $requette = "SELECT COUNT(*) FROM Liste WHERE Createur = :c";
+        if(!$this->conn->executeQuery($requette, array(":c"=>[$createur, PDO::PARAM_STR])))
+        {
+            throw new Exception("Problème lors de la récupération des listes");
+        }
+        return $this->conn->getResults()[0][0];
+
+    }
+
 }

@@ -104,17 +104,28 @@ class modeleVisiteur{
         $gw->modifier($id, $nouveauNom);
 
     }
-    public function getMaxPageListes()
+    public function getMaxPageListes(string $createur, int $nbElements) : int
     {
-
+        global $dsn, $loginDB, $pswdDB;
+        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
+        $nbTotal = $gw->getNbListesParCreateur($createur);
+        return ceil($nbTotal/$nbElements);
     }
-    public function getNomListe()
+
+    public function getNomListe(int $id): string
     {
-
+        global $dsn, $loginDB, $pswdDB;
+        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
+        return $gw->getListe($id)->getNom();
     }
-    public function getMaxPageTaches()
+
+    public function getMaxPageTaches(int $listeID, int $nbElements) : int
     {
-
+        global $dsn, $loginDB, $pswdDB;
+        $gw = new GatewayTache(new Connexion($dsn, $loginDB, $pswdDB));
+        $nbTotal = $gw->getNbTacheParListeID($listeID);
+        return ceil($nbTotal/$nbElements);
     }
+
 
 }

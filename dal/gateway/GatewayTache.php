@@ -64,11 +64,24 @@ class GatewayTache
     public function getTache(int $id)
     {
         $query = "SELECT * FROM Tache WHERE listeId =:i";
-        if(!$this->conn->executeQuery($query,array(":i" => array($id, PDO::PARAM_INT))))
+        if(!$this->conn->executeQuery($query,array(
+            ":i" => array($id, PDO::PARAM_INT))))
         {
             return array();
         }
         $res = $this->conn->getResults();
         return $res;
     }
+
+    public function getNbTacheParListeID(int $listeID): int
+    {
+        $requette = "SELECT COUNT(*) FROM _Tache WHERE listID = :id";
+        if(!$this->conn->executeQuery($requette, array(":id"=>[$listeID, PDO::PARAM_INT])))
+        {
+            throw new Exception("Problème lors de la récupération des taches");
+        }
+        return $this->conn->getResults()[0][0];
+
+    }
+
 }
