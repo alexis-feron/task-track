@@ -129,9 +129,11 @@ class ControleurVisiteur
         $compte = $mdl->connexion($login, $mdp);
         if(!is_null($compte))
         {
-            require_once("controleur/ControleurUtilisateur.php");
+            require_once("controleur/ControleurVisiteur.php");
             $_REQUEST["action"] = "afficherListe";
-            $modele=new modeleUtilisateur();
+            //$modele=new modeleVisiteur();
+            new modeleVisiteur();
+
         }
         else
         {
