@@ -17,12 +17,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php $listes[]=new Liste(15,'re','a',true,[]); if(isset($listes)) : ?>
-                <?php foreach($listes as $liste):?>
+            <?php if(isset($listes)) :
+                foreach($listes as $l):
+                    $l=(object) $l;?>
                     <tr>
-                        <th><?= $liste->getNom()?></th>
-                        <th><?= $liste->getCreateur()?></th>
-                        <th><?= $liste->getPublique()?></th>
+                        <th><?= $l->nom?></th>
+                        <th><?= $l->createur?></th>
+                        <th><?= $l->publique?></th>
                         <th><input value="Modifier" type="button"></th>
                         <th><input value="Supprimer" type="button"></th>
                     </tr>

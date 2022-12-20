@@ -86,7 +86,7 @@ class GatewayListe
     public function getListe(int $id): Liste
     {
         $gwTache = new GatewayTache($this->conn);
-        $query = "SELECT * FROM List WHERE id = :i";
+        $query = "SELECT * FROM Liste WHERE id = :i";
         $isOK = $this->conn->executeQuery($query, array(
             ":i" => array($id, PDO::PARAM_INT)));
         if (!$isOK) {
@@ -101,10 +101,27 @@ class GatewayListe
             $liste["id"],
             $liste["nom"],
             $liste["createur"],
-            $liste["punlique"],
-            $gwTache->getTacheTrie($liste["listeID"], 1, 10)
+            $liste["publique"],
+            $gwTache->getTacheTrie($liste["id"], 1, 10)
         );
     }
+
+    public function getListes(): array
+    {
+        new GatewayTache($this->conn);
+        $query = "SELECT * FROM Liste WHERE publique=true";
+        $isOK = $this->conn->executeQuery($query, array());
+        if (!$isOK) {
+            throw new Exception("Erreur lors de la récupération des listes");
+        }
+        $listes = $this->conn->getResults();
+        if (sizeof($listes) == 0) {
+            throw new Exception("Aucune liste trouvée");
+        }
+        return $listes;
+    }
+
+
     public function getListeParCreateur(int $page, int $nbListes, Compte $compte) : array
     {
         $gwTache = new GatewayTache($this->conn);

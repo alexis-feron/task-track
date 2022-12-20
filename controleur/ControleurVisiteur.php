@@ -17,6 +17,7 @@ class ControleurVisiteur
                 $action = Validation::nettoyerString($_REQUEST["action"]);
             }
             switch ($action) {
+                case 'accueil':
                 case NULL:
                     $this->Reinit();
                     break;
@@ -36,9 +37,6 @@ class ControleurVisiteur
                 case 'supprimerListe':
                     $this->supprimerListe();
                     break;
-                case 'accueil':
-                    require("vues/accueil.php");
-                    break;
                 case 'supprimerTache':
                     $this->supprimerTache();
                     break;
@@ -55,12 +53,12 @@ class ControleurVisiteur
                     $this->seConnecter();
                     break;
                 case 'seConnecter':
+                    require("vues/connexion.php");
+                    break;
                 default:
                     $VueErreur[] ="Erreur d'appel php";
                     require("vues/connexion.php");
-                    break;
             }
-
         }
         catch (PDOException $e)
         {
@@ -102,8 +100,8 @@ class ControleurVisiteur
             $listes = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
             $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
         }else {
-            $listes = $modele->getListes($page, $nbElements);
-            $maxPage = $modele->getMaxPageListes();
+            $listes = $modele->getListes();
+            $maxPage = $modele->getMaxPageListes("", $nbElements);
         }
 
         // Affichage de la vue
@@ -129,9 +127,7 @@ class ControleurVisiteur
         $compte = $mdl->connexion($login, $mdp);
         if(!is_null($compte))
         {
-            require_once("controleur/ControleurUtilisateur.php");
             $_REQUEST["action"] = "afficherListe";
-            $modele=new modeleUtilisateur();
         }
         else
         {
@@ -302,7 +298,7 @@ class ControleurVisiteur
         $maxPage = $mdl->getMaxPageTaches($actualList, $nbElements);
 
         // Affichage de la vue
-        require("vues/editeurDeStatuts.php");
+        //require("vues/editeurDeStatuts.php");
     }
 
 
