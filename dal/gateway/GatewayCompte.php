@@ -32,7 +32,7 @@ class GatewayCompte
 
     public function supprimer(Compte $compteSuppr)
     {
-        $query = "DELETE FROM Utilisateur WHERE pseudo =:i";
+        $query = "DELETE FROM Utilisateur WHERE pseudo=:i";
         return $this->conn->executeQuery($query, array(
             ":i" => array($compteSuppr->getPseudonyme(), PDO::PARAM_INT)));
     }
@@ -44,13 +44,13 @@ class GatewayCompte
         $query = "SELECT * FROM Utilisateur WHERE pseudo=:p";
         if(!$this->conn->executeQuery($query, [":p" => [$pseudo, PDO::PARAM_STR]]))
         {
-            return null;
+            return array();
         }
         $comptesSQL = $this->conn->getResults();
         if(sizeof($comptesSQL) != 0)
         {
             $compte = new Compte(
-                $comptesSQL[0]["pseudonyme"],
+                $comptesSQL[0]["pseudo"],
                 $gw->getListeParCreateur(1, 10, $comptesSQL[0]["pseudo"]),
                 $comptesSQL[0]["motDePasse"],
             );

@@ -19,7 +19,7 @@ class ControleurVisiteur
             switch ($action) {
                 case 'accueil':
                 case NULL:
-                    $this->Reinit();
+                    $this->accueil();
                     break;
                 /*case 'sInscrire':
                     $this->sInscrire();
@@ -30,9 +30,6 @@ class ControleurVisiteur
                     break;
                 case 'modifierListe':
                     $this->modifierListe();
-                    break;
-                case 'afficherListe':
-                    $this->afficherListe();
                     break;
                 case 'supprimerListe':
                     $this->supprimerListe();
@@ -51,6 +48,7 @@ class ControleurVisiteur
                     break;
                 case 'connexionEnCours':
                     $this->seConnecter();
+                case 'afficherListe':
                     break;
                 case 'seConnecter':
                     require("vues/connexion.php");
@@ -75,7 +73,7 @@ class ControleurVisiteur
     }
 
 
-    function Reinit() {
+    function accueil() {
         // Si la page n'est pas set, on prend la première page
         if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"])) {
             $page = 1;
@@ -127,7 +125,9 @@ class ControleurVisiteur
         $compte = $mdl->connexion($login, $mdp);
         if(!is_null($compte))
         {
+            require_once("controleur/ControleurUtilisateur.php");
             $_REQUEST["action"] = "afficherListe";
+            new ControleurUtilisateur();
         }
         else
         {
@@ -252,55 +252,6 @@ class ControleurVisiteur
         */
         new ControleurVisiteur();
     }
-
-    function afficherListe()
-    {
-        if(!isset($_REQUEST["liste"]) || empty($_REQUEST["liste"]))
-        {
-            throw new Exception("Aucune liste n'a été renseignée");
-        }
-        if(!Validation::validerIntPossitif($_REQUEST["list"]))
-        {
-            throw new Exception("Valeur illégale de la liste requétée");
-        }
-
-        // TODO: Verifier que c'est bien une liste de l'utilisateur.trice connécté.e
-
-        // Si la page n'est pas set, on prend la première page
-        if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"]))
-        {
-            $page = 1;
-        }
-        else
-        {
-            // si la validation a échouée, on prend la première page
-            $page = Validation::validerIntPossitif($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
-        }
-
-        // Si le nombre d'élément n'est pas set, on en prend par défaut 10
-        if(!isset($_GET["nbElements"]) || empty($_GET["nbElements"]))
-        {
-            $nbElements = 10;
-        }
-        else
-        {
-            // Par défaut si la validation a échouée on prend 10 éléments
-            $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
-        }
-        $mdl = new ModeleUtilisateur();
-
-        // Récupération des taches dans le modèle
-        $taches = $mdl->getTaches($_REQUEST["liste"], $page, $nbElements);
-
-        // Définition des variable nécéssaire à la vue.
-        $actualList = $_REQUEST["liste"];
-        $nomListe = $mdl->getNomListe($actualList);
-        $maxPage = $mdl->getMaxPageTaches($actualList, $nbElements);
-
-        // Affichage de la vue
-        //require("vues/editeurDeStatuts.php");
-    }
-
 
     function supprimerListe()
     {

@@ -19,7 +19,7 @@
             </tbody>
         </table>
         <input value="Annuler" type="reset">
-        <input value="Se connecter" type="submit" name="connexionEnCours">
+        <input type="submit" id="submit" name="veutSeConnecter" value="Valider">
     </form>
 </body>
 </html>

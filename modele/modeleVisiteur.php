@@ -3,22 +3,25 @@ require("dal/gateway/GatewayListe.php");
 require("dal/gateway/GatewayCompte.php");
 require("dal/Connexion.php");
 class modeleVisiteur{
-    public function connexion(string $login, string $mdp) : Compte
+    public function connexion(string $log, string $motPasse) : Compte
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayCompte(new Connexion($dsn, $login, $mdp));
-        $compte = $gw->getCompte($login);
-        if($compte == null)
+        $compte = $gw->getCompte($log);
+        if($compte==null)
         {
-            throw new Exception("Login ou mot de passe incorrect");
+            echo 'Login incorrect';
+            throw new Exception("Login incorrect");
         }
-        if(!password_verify($mdp, $compte->getMotDePasse()))
+        //if(!password_verify($motPasse, $compte->getMotDePasse()))
+        if($motPasse!=$compte->getMotDePasse())
         {
-            throw new Exception("Login ou mot de passe incorrect");
+            echo 'Mot de passe incorrect';
+            throw new Exception("Mot de passe incorrect");
         }
 
         $_SESSION["login"] = $compte->getPseudonyme();
-        $_SESSION["Lists"] = $compte->getListes();
+        $_SESSION["listes"] = $compte->getListes();
         return $compte;
     }
 
