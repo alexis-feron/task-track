@@ -126,8 +126,8 @@ class ControleurVisiteur
         if(!is_null($compte))
         {
             require_once("controleur/ControleurUtilisateur.php");
-            $_REQUEST["action"] = "afficherListe";
             new ControleurUtilisateur();
+            $_REQUEST["action"] = "afficherListe";
         }
         else
         {

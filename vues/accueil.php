@@ -17,7 +17,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php if(isset($listes)) :
+            <?php
+            if(isset($listes)) :
                 foreach($listes as $l):
                     $l=(object) $l;?>
                     <tr>
