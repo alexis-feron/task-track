@@ -103,7 +103,7 @@ class ControleurVisiteur
             $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
         }else {
             $listes = $modele->getListes($page, $nbElements);
-            $maxPage = $modele->getMaxPageListes();
+            $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
         }
 
         // Affichage de la vue
