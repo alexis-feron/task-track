@@ -214,7 +214,7 @@ class ControleurVisiteur
 
     function modifierListe()
     {
-        $mdl = new ModeleVisiteur();
+        $mdl = new modeleVisiteur();
 
         if(!isset($_REQUEST["liste"]))
         {

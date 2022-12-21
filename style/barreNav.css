@@ -1,14 +1,16 @@
 ul {
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #303030;
+    border-radius: 20px;
 }
 
 li {
     float: left;
     border-right:1px solid #bbb;
+    border-bottom:1px solid #bbb;
     padding-left: 15px;
     padding-right: 15px;
     height: 50px;
@@ -17,7 +19,6 @@ div{
     display: table-cell;
     height: 50px;
     vertical-align: middle;
-    color: #4169E1;
     font-weight: bold;
 }
 
@@ -35,8 +36,5 @@ li a {
 
 li a:hover:not(.active) {
     background-color: #111;
-}
-
-.active {
-    background-color: #04AA6D;
+    border-radius: 20px;
 }

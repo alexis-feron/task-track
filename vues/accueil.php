@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style/table.css" rel="stylesheet">
     <title>Acceuil</title>
 </head>
 <body>
@@ -12,8 +13,7 @@
                 <th>Nom</th>
                 <th>Créateur</th>
                 <th>Publique</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th>Edition</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,10 @@
                         <th><?= $l->nom?></th>
                         <th><?= $l->createur?></th>
                         <th><?= $l->publique?></th>
-                        <th><input value="Modifier" type="button"></th>
-                        <th><input value="Supprimer" type="button"></th>
+                        <th>
+                            <input onclick="location.href='?action=modifierListe" type="button" value="Modifier">
+                            <input onclick="location.href='?action=supprimerListe'" type="button" value="Supprimer">
+                        </th>
                     </tr>
                 <?php endforeach;?>
             <?php endif;?>

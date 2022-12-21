@@ -4,7 +4,7 @@
 </head>
 <body>
     <ul>
-        <li><div>ToDo List</div></li>
+        <li><img src="style/logo.png" width="65"></li>
         <li><a href="?action=accueil">Accueil</a></li>
         <li><a href="?action=seConnecter">Connexion</a></li>
         <!--<li><a href="?action=sInscrire">S'inscrire</a></li>-->
