@@ -26,7 +26,7 @@
                         <th><?= $l->createur?></th>
                         <th><?= $l->publique?></th>
                         <th>
-                            <input onclick="location.href='?action=modifierListe" type="button" value="Modifier">
+                            <input onclick="location.href='?action=modifierListe'" type="button" value="Modifier">
                             <input onclick="location.href='?action=supprimerListe'" type="button" value="Supprimer">
                         </th>
                     </tr>
