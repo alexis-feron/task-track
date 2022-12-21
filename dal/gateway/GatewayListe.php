@@ -86,7 +86,7 @@ class GatewayListe
     public function getListe(int $id): Liste
     {
         $gwTache = new GatewayTache($this->conn);
-        $query = "SELECT * FROM List WHERE id = :i";
+        $query = "SELECT * FROM Liste WHERE id = :i";
         $isOK = $this->conn->executeQuery($query, array(
             ":i" => array($id, PDO::PARAM_INT)));
         if (!$isOK) {
@@ -101,34 +101,77 @@ class GatewayListe
             $liste["id"],
             $liste["nom"],
             $liste["createur"],
-            $liste["punlique"],
-            $gwTache->getTacheTrie($liste["listeID"], 1, 10)
+            $liste["publique"],
+            $gwTache->getTacheTrie($liste["id"], 1, 10)
         );
     }
-    public function getListeParCreateur(int $page, int $nbListes, Compte $compte) : array
+
+    public function getListes(): array
+    {
+        $gw=new GatewayTache($this->conn);
+        $query = "SELECT * FROM Liste WHERE publique=true";
+        $isOK = $this->conn->executeQuery($query, array());
+        if (!$isOK) {
+            throw new Exception("Erreur lors de la récupération des listes");
+        }
+        $listes = $this->conn->getResults();
+        if (sizeof($listes) == 0) {
+            throw new Exception("Aucune liste trouvée");
+        }
+        return $listes;
+    }
+    public function getListesPriv(): array
+    {
+        $gw=new GatewayTache($this->conn);
+        $query = "SELECT * FROM Liste WHERE createur=:c AND publique=false";
+        $isOK = $this->conn->executeQuery($query, array(
+            ":c" => array($_SESSION["login"], PDO::PARAM_STR)
+        ));
+        if (!$isOK) {
+            throw new Exception("Erreur lors de la récupération des listes");
+        }
+        $listes = $this->conn->getResults();
+        $listesPub=$this->getListes();
+        foreach ($listesPub as $l) {
+            $listes[] = $l;
+        }
+        if (sizeof($listes) == 0) {
+            throw new Exception("Aucune liste trouvée");
+        }
+        return $listes;
+    }
+
+
+    public function getListeParCreateur(int $page, int $nbListes, string $createur) : iterable
     {
         $gwTache = new GatewayTache($this->conn);
         $listes = array();
-        $requete = "SELECT * FROM Liste ORDER BY nom LIMIT :p+:nb, :nb";
-        $isOK=$this->conn->executeQuery($requete, array(
-            ":p" => array($page-1, PDO::PARAM_INT),
-            ":nb" => array($nbListes, PDO::PARAM_INT)));
+        $requete = "SELECT * FROM Liste WHERE createur = :c  LIMIT :p, :n";
+        $isOK=$this->conn->executeQuery($requete, [
+            ":c" => [$createur, PDO::PARAM_STR],
+            ":p" => [($page-1)*$nbListes, PDO::PARAM_INT],
+            ":n" => [$nbListes, PDO::PARAM_INT]
+        ]);
         if(!$isOK)
         {
             return array();
         }
+
         $res = $this->conn->getResults();
+        $listes = array();
         foreach($res as $liste)
         {
             $listes[] = new Liste(
                 $liste["id"],
                 $liste["nom"],
                 $liste["createur"],
-                $liste["publique"],
-                $gwTache->getTacheTrie($liste["id"], 1, 10));
+                false,
+                $gwTache->getTache($liste["id"])
+            );
         }
         return $listes;
     }
+
 
     public function getNbListesParCreateur(string $createur): int
     {

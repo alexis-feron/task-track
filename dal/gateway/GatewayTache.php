@@ -39,7 +39,7 @@ class GatewayTache
 
     public function getTacheTrie(int $l, int $page, int $nbTache) : iterable //renvoie les taches de l trié par nom
     {
-        $query = "SELECT * FROM Tache WHERE listeId =:i LIMIT :p, :n";
+        $query = "SELECT * FROM Tache WHERE idListe=:i LIMIT :p, :n";
         if(!$this->conn->executeQuery($query,array(
             ":i" => array($l, PDO::PARAM_INT),
             ":p" => array(($page-1)*$nbTache, PDO::PARAM_INT),
@@ -55,7 +55,7 @@ class GatewayTache
             $taches[] = new Tache(
                 $tache["Id"],
                 $tache["Nom"],
-                $tache["listeID"]
+                $tache["idListe"]
             );
         }
         return $taches;
@@ -63,7 +63,7 @@ class GatewayTache
 
     public function getTache(int $id)
     {
-        $query = "SELECT * FROM Tache WHERE listeId =:i";
+        $query = "SELECT * FROM Tache WHERE idListe =:i";
         if(!$this->conn->executeQuery($query,array(
             ":i" => array($id, PDO::PARAM_INT))))
         {
@@ -73,10 +73,10 @@ class GatewayTache
         return $res;
     }
 
-    public function getNbTacheParListeID(int $listeID): int
+    public function getNbTacheParListeID(int $idListe): int
     {
         $requette = "SELECT COUNT(*) FROM _Tache WHERE listID = :id";
-        if(!$this->conn->executeQuery($requette, array(":id"=>[$listeID, PDO::PARAM_INT])))
+        if(!$this->conn->executeQuery($requette, array(":id"=>[$idListe, PDO::PARAM_INT])))
         {
             throw new Exception("Problème lors de la récupération des taches");
         }

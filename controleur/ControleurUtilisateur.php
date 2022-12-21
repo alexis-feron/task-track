@@ -4,23 +4,58 @@ class ControleurUtilisateur extends ControleurVisiteur
 {
     function __construct()
     {
-        parent::__construct();
+        //parent::__construct();
         try {
-            $action = $_REQUEST['action']; //modif action
-
-            Validation::nettoyerAction(); //à completer
+            if(!isset($_REQUEST["action"]))
+            {
+                $action = NULL;
+            }
+            else
+            {
+                $action = Validation::nettoyerString($_REQUEST["action"]);
+            }
             switch ($action) {
+                case 'accueil':
+                case 'afficherListe':
+                case 'seConnecter':
+                case 'connexionEnCours':
                 case NULL:
-                    $this->Reinit();
+                    $this->afficherListe();
+                    break;
+                /*case 'sInscrire':
+                    $this->sInscrire();
+                    break;
+                */
+                case 'ajoutListe':
+                    $this->ajoutListe();
+                    break;
+                case 'modifierListe':
+                    $this->modifierListe();
+                    break;
+                case 'supprimerListe':
+                    $this->supprimerListe();
+                    break;
+                case 'supprimerTache':
+                    $this->supprimerTache();
+                    break;
+                case 'modifierTache':
+                    $this->modifierTache();
+                    break;
+                case 'ajouterTache':
+                    $this->ajouterTache();
+                    break;
+                case 'tacheFaite':
+                    $this->tacheFaite();
                     break;
                 case 'deconnexion':
                     $this->deconnexion();
                     break;
                 default:
-                    throw new Exception("Action inconnue");
+                    $VueErreur[] ="Erreur d'appel php";
+                    require("vues/connexion.php");
             }
         } catch (Exception $e) {
-            require("vues/erreur.php");
+            //require("vues/erreur.php");
         }
     }
 
@@ -34,5 +69,11 @@ class ControleurUtilisateur extends ControleurVisiteur
         // Redirection vers la page de connection
         new ControleurVisiteur();
 
+    }
+    function afficherListe()
+    {
+        $modele=new modeleUtilisateur();
+        $listes = $modele->getListesPriv();
+        require("vues/accueil.php");
     }
 }

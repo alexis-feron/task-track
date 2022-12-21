@@ -131,9 +131,7 @@ class ControleurVisiteur
         {
             require_once("controleur/ControleurVisiteur.php");
             $_REQUEST["action"] = "afficherListe";
-            //$modele=new modeleVisiteur();
-            new modeleVisiteur();
-
+            $modele=new modeleVisiteur();
         }
         else
         {

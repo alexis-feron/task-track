@@ -3,22 +3,25 @@ require("dal/gateway/GatewayListe.php");
 require("dal/gateway/GatewayCompte.php");
 require("dal/Connexion.php");
 class modeleVisiteur{
-    public function connexion(string $login, string $mdp) : Compte
+    public function connexion(string $log, string $motPasse) : Compte
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayCompte(new Connexion($dsn, $login, $mdp));
-        $compte = $gw->getCompte($login);
-        if($compte == null)
+        $compte = $gw->getCompte($log);
+        if($compte==null)
         {
-            throw new Exception("Login ou mot de passe incorrect");
+            echo 'Login incorrect';
+            throw new Exception("Login incorrect");
         }
-        if(!password_verify($mdp, $compte->getMotDePasse()))
+        //if(!password_verify($motPasse, $compte->getMotDePasse()))
+        if($motPasse!=$compte->getMotDePasse())
         {
-            throw new Exception("Login ou mot de passe incorrect");
+            echo 'Mot de passe incorrect';
+            throw new Exception("Mot de passe incorrect");
         }
 
         $_SESSION["login"] = $compte->getPseudonyme();
-        $_SESSION["Lists"] = $compte->getListes();
+        $_SESSION["listes"] = $compte->getListes();
         return $compte;
     }
 
@@ -31,11 +34,11 @@ class modeleVisiteur{
         return false;
     }
 
-    public function getListes(int $page, int $nbElements)
+    public function getListes()
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        return $gw->getListe($page, $nbElements);
+        return $gw->getListes();
     }
 
     public function getTaches(int $liste, int $page, int $nbElements)
@@ -106,8 +109,11 @@ class modeleVisiteur{
     }
     public function getMaxPageListes(string $createur, int $nbElements) : int
     {
-        global $dsn, $loginDB, $pswdDB;
-        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
+        global $dsn, $login, $mdp;
+        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        if ($createur==""){
+            return 0;
+        }
         $nbTotal = $gw->getNbListesParCreateur($createur);
         return ceil($nbTotal/$nbElements);
     }
