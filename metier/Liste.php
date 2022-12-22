@@ -2,14 +2,14 @@
 
 class Liste
 {
-    private $nom;
-    private $createur;
-    private $id;
-    private $taches;
-    private $publique;
+    private string $nom;
+    private string $createur;
+    private int $id;
+    private iterable $taches;
+    private bool $publique;
 
 
-    public function __construct(int $id, string $nom, string $createur,bool $publique, iterable $taches)
+    public function __construct(int $id, string $nom, string $createur, bool $publique, iterable $taches)
     {
         $this->nom = $nom;
         $this->createur = $createur;

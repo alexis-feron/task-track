@@ -26,6 +26,9 @@ class ControleurVisiteur
                     break;
                 */
                 case 'ajoutListe':
+                    require("vues/ajoutListe.php");
+                    break;
+                case 'ajouteLaListe':
                     $this->ajoutListe();
                     break;
                 case 'modifierListe':
@@ -189,6 +192,7 @@ class ControleurVisiteur
     */
     function ajoutListe()
     {
+        $mdl = new modeleVisiteur();
         if(!isset($_REQUEST["nomNvleListe"]))
         {
             throw new Exception("La nouvelle liste doit avoir un nom!");
@@ -197,6 +201,12 @@ class ControleurVisiteur
         {
             throw new Exception("La liste à creer ne peut pas avoir un nom nul");
         }
+
+        if (isset($_REQUEST["publique"])) {
+            $pub=true;
+        } else {
+            $pub=false;
+        }
         $nom = Validation::nettoyerString($_REQUEST["nomNvleListe"]);
 
         // test si nettoyage a fonctionné
@@ -204,12 +214,11 @@ class ControleurVisiteur
         {
             throw new Exception("Veuillez entrer un nom");
         }
-        $mdl = new modeleVisiteur();
 
-        // Création de la todoList par le modèle.
-        $mdl->creerListe($nom);
+        $mdl->creerListe($nom,$pub);
 
-        //$_REQUEST["action"] = "seeLists";
+        $_REQUEST["action"]="accueil";
+        require_once("controleur/ControleurVisiteur.php");
         new ControleurVisiteur();
     }
 

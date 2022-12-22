@@ -6,7 +6,7 @@
 </head>
 <body>
     <?php require("barreNav.php") ?>
-    <form method="post" action="">
+    <form method="post" action="?action=ajouteLaListe">
         <table>
             <thead>
                 <tr>
@@ -16,8 +16,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text"></td>
-                    <td><input type="checkbox"></td>
+                    <td><input type="text" name="nomNvleListe"></td>
+                    <td><input type="checkbox" name="publique"></td>
                 </tr>
             </tbody>
         </table>

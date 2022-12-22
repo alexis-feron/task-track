@@ -13,7 +13,7 @@ class FrontControler{
             "Visiteur" => [
                 "seConnecter", /*"sInscrire",*/ "accueil", "connexionEnCours",
                 "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
-                "supprimerTache", "modifierTache", "ajouterTache","tacheFaite"
+                "supprimerTache", "modifierTache", "ajouterTache","tacheFaite","ajouteLaListe"
             ]
         );
         session_start();

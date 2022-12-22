@@ -23,24 +23,16 @@ class GatewayListe
             ':n' => array($l->getNom()), PDO::PARAM_STR));
     }
     */
-    //pour creer listes publiques
-    public function insererPublique(String $nomListe): bool
-    {
-        //utile de laisser createur??
-        $query = "INSERT INTO Liste VALUES (:i, :cre, :pu, :n)";
-        return $this->conn->executeQuery($query, array(
-            ':i' => array($nomListe->genererId(), PDO::PARAM_INT), //pk genererId(Liste.php) pas reconnue??
-            ':cre' => array("publique"),
-            ':pu' => array(1)));
-    }
 
-    public function inserer2(string $nom, string $createur) : bool
+    public function inserer(Liste $liste): bool
     {
-        $requette = "INSERT INTO Liste (nom, createur) VALUES(:n, :c)";
-        return $this->conn->executeQuery($requette, [
-            ":n" => [$nom, PDO::PARAM_STR],
-            ":c" => [$createur, PDO::PARAM_STR]
-        ]);
+        $query = "INSERT INTO Liste(id,nom,createur,publique) VALUES(:i, :n, :cre, :pu)";
+        return $this->conn->executeQuery($query, array(
+            ':i' => array($liste->getId(), PDO::PARAM_INT),
+            ':cre' => array($liste->getCreateur(), PDO::PARAM_STR),
+            ':pu' => array($liste->getPublique(), PDO::PARAM_BOOL),
+            ':n' => array($liste->getNom(), PDO::PARAM_STR),
+        ));
     }
 
     public function supprimer(int $listeId): bool

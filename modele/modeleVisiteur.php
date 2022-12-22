@@ -20,8 +20,8 @@ class modeleVisiteur{
             throw new Exception("Mot de passe incorrect");
         }
 
-        $_SESSION["login"] = $compte->getPseudonyme();
-        $_SESSION["listes"] = $compte->getListes();
+        $_SESSION["login"]=$compte->getPseudonyme();
+        $_SESSION["listes"]=$compte->getListes();
         return $compte;
     }
 
@@ -50,11 +50,18 @@ class modeleVisiteur{
         return $gw->getTache($liste, $page, $nbElements);
     }
 
-    public function creerListe(string $nom) : bool
+    public function creerListe(string $nom,bool $pub) : bool
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        return $gw->insererPublique($nom);
+        if(isset($_SESSION["login"])){
+            $crea=$_SESSION["login"];
+        }else{
+            $crea="Visiteur";
+            $pub=true;
+        }
+        $liste=new Liste(rand(1000,2000000),$nom,$crea,$pub,array());
+        return $gw->inserer($liste);
     }
 
     public function supprimerListe(int $listID) : bool
