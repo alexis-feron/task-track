@@ -26,8 +26,17 @@
                         <th><?= $l->createur?></th>
                         <th><?= $l->publique?></th>
                         <th>
-                            <input onclick="location.href='?action=modifierListe'" type="button" value="Modifier">
-                            <input onclick="location.href='?action=supprimerListe'" type="button" value="Supprimer">
+                            <input onclick="location.href='?action=afficherTaches&liste=<?=$l->id?>'" type="button" value="Afficher Taches">
+                            <input onclick="location.href='?action=modifierListe&liste=<?=$l->id?>'" type="button" value="Modifier Nom">
+                            <input onclick="deleteL(<?=$l->id?>)" type="button" value="Supprimer Liste">
+                            <script>
+                                function deleteL(num){
+                                    let valid = confirm("Suppprimer la liste ?");
+                                    if(valid===true){
+                                        location.href='?action=supprimerListe&liste='+num;
+                                    }
+                                }
+                            </script>
                         </th>
                     </tr>
                 <?php endforeach;?>

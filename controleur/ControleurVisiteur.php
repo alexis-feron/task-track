@@ -216,31 +216,37 @@ class ControleurVisiteur
     function modifierListe()
     {
         $mdl = new modeleVisiteur();
-
+        echo $_REQUEST["liste"];
         if(!isset($_REQUEST["liste"]))
         {
+            echo 'ici';
             throw new Exception("La liste n'existe pas");
         }
         if(empty($_REQUEST["liste"]))
         {
-            throw new Exception("La liste ne peut pas être nulr");
+            echo 'ici2';
+            throw new Exception("La liste ne peut pas être nul");
         }
         if(!Validation::validerIntPossitif($_REQUEST["liste"]))
         {
+            echo 'ici3';
             throw new Exception("L'ID de la liste doit être positif");
         }
 
         if(!isset($_REQUEST["nvNom"]))
         {
+            echo 'ici4';
             throw new Exception("Le nom doit exister");
         }
         if(empty($_REQUEST["nvNom"]))
         {
+            echo 'ici5';
             throw new Exception("Le nouveau nom ne peut pas être nul");
         }
         $nouveauNom = Validation::nettoyerString($_REQUEST["nvNom"]);
         if(is_null($nouveauNom))
         {
+            echo 'ici6';
             throw new Exception("Le nom entré n'est pas correct");
         }
 
@@ -256,7 +262,7 @@ class ControleurVisiteur
 
     function supprimerListe()
     {
-        $mdl = new ModeleVisiteur();
+        $mdl = new modeleVisiteur();
         if(!isset($_REQUEST["liste"]))
         {
             throw new Exception("La liste doit exister");
@@ -270,13 +276,15 @@ class ControleurVisiteur
         {
             throw new Exception("L'ID de la liste doit être positif");
         }
+
+
         // TODO: verifier que c'est bien une liste de l'utilisateur, comparer getCreateur et login
         $mdl->supprimerListe($_REQUEST["liste"]);
 
-        /*
         // Redirection vers l'accueil
-        $_REQUEST["action"] = "seeLists";
-        */
+        $_REQUEST["action"] = "accueil";
+
+        require_once("controleur/ControleurVisiteur.php");
         new ControleurVisiteur();
     }
 
@@ -330,9 +338,7 @@ class ControleurVisiteur
 
     function modifierTache()
     {
-        $mdl = new ModeleVisiteur();
-
-        echo'tache';
+        $mdl = new modeleVisiteur();
 
         if(!isset($_REQUEST["tache"]))
         {
@@ -348,7 +354,6 @@ class ControleurVisiteur
         }
 
         // Si le numéro de la liste est pas set, vide ou <=0, on lève une exception
-        echo'liste';
         if(!isset($_REQUEST["liste"]))
         {
             throw new Exception("Le parametre list doit exister");
@@ -361,7 +366,6 @@ class ControleurVisiteur
         {
             throw new Exception("Le parametre list doit être un entier strictement superieur à 0");
         }
-        echo 'nom';
         if(!isset($_REQUEST["nom"]))
         {
             throw new Exception("Le nom ne peut pas être vide");
