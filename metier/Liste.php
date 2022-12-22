@@ -48,5 +48,9 @@ class Liste
     {
         return $this->publique;
     }
-
+    public function genererId()
+    {
+        return $nvlId = abs(crc32(uniqid())); //creer id unique sous forme de chaine de caractere(uniqid) puis remis en hexa et
+        // encode sur 32 bits(8 caracteres par crc32)puis prends val absolue pr positif(abs)
+    }
 }

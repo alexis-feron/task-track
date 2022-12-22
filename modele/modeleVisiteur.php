@@ -54,16 +54,7 @@ class modeleVisiteur{
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        if(!$this->estConnecte())
-        {
-            throw new Exception("Il faut être connecté.e pour créer un Todo List.");
-        }
-        $pseudo = Validation::nettoyerString($_SESSION["login"]);
-        if(is_null($pseudo))
-        {
-            throw new Exception("Erreur avec le pseudo");
-        }
-        return $gw->inserer2($nom, $pseudo);
+        return $gw->insererPublique($nom);
     }
 
     public function supprimerListe(int $listID) : bool
@@ -97,8 +88,8 @@ class modeleVisiteur{
 
     public function modifierNomTache(int $id, string $nouveauNom)
     {
-        global $dsn, $loginDB, $pswdDB;
-        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
+        global $dsn, $login, $mdp;
+        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         $gw->modifier($id, $nouveauNom);
     }
     public function modifierNomListe(int $id, string $nouveauNom){
@@ -120,15 +111,15 @@ class modeleVisiteur{
 
     public function getNomListe(int $id): string
     {
-        global $dsn, $loginDB, $pswdDB;
-        $gw = new GatewayListe(new Connexion($dsn, $loginDB, $pswdDB));
+        global $dsn, $login, $mdp;
+        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         return $gw->getListe($id)->getNom();
     }
 
     public function getMaxPageTaches(int $listeID, int $nbElements) : int
     {
-        global $dsn, $loginDB, $pswdDB;
-        $gw = new GatewayTache(new Connexion($dsn, $loginDB, $pswdDB));
+        global $dsn, $login, $mdp;
+        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
         $nbTotal = $gw->getNbTacheParListeID($listeID);
         return ceil($nbTotal/$nbElements);
     }

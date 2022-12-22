@@ -204,7 +204,7 @@ class ControleurVisiteur
         {
             throw new Exception("Veuillez entrer un nom");
         }
-        $mdl = new ModeleVisiteur();
+        $mdl = new modeleVisiteur();
 
         // Création de la todoList par le modèle.
         $mdl->creerListe($nom);
