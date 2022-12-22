@@ -95,7 +95,8 @@ class ControleurVisiteur
 
         if($modele->estConnecte()) {
             // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
-            $listes = $modele->getListes(Validation::nettoyerString($_SESSION["login"]), $page, $nbElements);
+            $modele=new modeleUtilisateur();
+            $listes = $modele->getListesPriv();
             $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
         }else {
             $listes = $modele->getListes();
