@@ -87,7 +87,7 @@ class ControleurVisiteur
             $nbElements = 10;
         } else
         {
-            // Si la validation a échouée, on prend 10 éléments, sinon, le nombre désiré par l'utilisateur.trice
+            // Si la validation a échoué, on prend 10 éléments, sinon, le nombre renseigné
             $nbElements = Validation::validerIntPossitif($_GET["nbElements"]) ? $_GET["nbElements"] : 10;
         }
 
@@ -270,11 +270,11 @@ class ControleurVisiteur
         {
             throw new Exception("L'ID de la liste doit être positif");
         }
-        // TODO: verifier que c'est bien une liste de l'utilisateur
+        // TODO: verifier que c'est bien une liste de l'utilisateur, comparer getCreateur et login
         $mdl->supprimerListe($_REQUEST["liste"]);
 
         /*
-        // Rediréction vers l'accueil
+        // Redirection vers l'accueil
         $_REQUEST["action"] = "seeLists";
         */
         new ControleurVisiteur();
@@ -332,6 +332,8 @@ class ControleurVisiteur
     {
         $mdl = new ModeleVisiteur();
 
+        echo'tache';
+
         if(!isset($_REQUEST["tache"]))
         {
             throw new Exception("La tache doit exister");
@@ -346,6 +348,7 @@ class ControleurVisiteur
         }
 
         // Si le numéro de la liste est pas set, vide ou <=0, on lève une exception
+        echo'liste';
         if(!isset($_REQUEST["liste"]))
         {
             throw new Exception("Le parametre list doit exister");
@@ -358,18 +361,19 @@ class ControleurVisiteur
         {
             throw new Exception("Le parametre list doit être un entier strictement superieur à 0");
         }
+        echo 'nom';
         if(!isset($_REQUEST["nom"]))
         {
             throw new Exception("Le nom ne peut pas être vide");
         }
         if(empty($_REQUEST["nom"]))
         {
-            throw new Exception("Le paramètre nom doit contenire une valeur");
+            throw new Exception("Le nom doit contenir une valeur");
         }
         $nom = Validation::nettoyerString($_REQUEST["nom"]);
         if(is_null($nom))
         {
-            throw new Exception("Le nom ou le commentaire contien des valeurs illégales");
+            throw new Exception("Le nom ou le commentaire contient des valeurs illégales");
         }
 
         // Modification de la tache par le modèle
@@ -378,7 +382,7 @@ class ControleurVisiteur
         // Définition des variables nécessaire à la vue
         $liste = $_REQUEST["liste"];
 
-        // Rediréction vers l'affichage le la liste list
+        // Redirection vers l'affichage le la liste list
         $_REQUEST["action"] = "seeList";
         new ControleurVisiteur();
     }
@@ -398,7 +402,7 @@ class ControleurVisiteur
             $_REQUEST["estFait"] = array();
         }
 
-        // exist contient toute les taches de la page où été l'utilisateur.trice
+        // exist contient toutes les taches de la page où était l'utilisateur
         if(!isset($_REQUEST["exist"]))
         {
             throw new Exception("Aucune tâche n'est définit");
@@ -457,7 +461,7 @@ class ControleurVisiteur
         $mdl->supprimerTache($_REQUEST["tache"]);
 
         /*
-        //Rediréction vers l'affichage de la liste modifiée
+        //Redirection vers l'affichage de la liste modifiée
         $_REQUEST["action"] = "seeList";
         */
         new ControleurVisiteur();
