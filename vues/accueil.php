@@ -24,7 +24,7 @@
                     <tr>
                         <th><?= $l->nom?></th>
                         <th><?= $l->createur?></th>
-                        <th><?= $l->publique?></th>
+                        <th><?php if($l->publique==1) echo 'oui'; else echo 'non'?></th>
                         <th>
                             <input onclick="location.href='?action=afficherTaches&liste=<?=$l->id?>'" type="button" value="Afficher Taches">
                             <input onclick="location.href='?action=modifierListe&liste=<?=$l->id?>'" type="button" value="Modifier Nom">

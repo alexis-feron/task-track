@@ -27,9 +27,15 @@ class ControleurUtilisateur extends ControleurVisiteur
                     break;
                 */
                 case 'ajoutListe':
+                    require("vues/ajoutListe.php");
+                    break;
+                case 'ajouteLaListe':
                     $this->ajoutListe();
                     break;
                 case 'modifierListe':
+                    require("vues/modifierListe.php");
+                    break;
+                case 'modifieLaListe':
                     $this->modifierListe();
                     break;
                 case 'supprimerListe':

@@ -32,6 +32,9 @@ class ControleurVisiteur
                     $this->ajoutListe();
                     break;
                 case 'modifierListe':
+                    require("vues/modifierListe.php");
+                    break;
+                case 'modifieLaListe':
                     $this->modifierListe();
                     break;
                 case 'supprimerListe':
@@ -225,47 +228,37 @@ class ControleurVisiteur
     function modifierListe()
     {
         $mdl = new modeleVisiteur();
-        echo $_REQUEST["liste"];
         if(!isset($_REQUEST["liste"]))
         {
-            echo 'ici';
             throw new Exception("La liste n'existe pas");
         }
         if(empty($_REQUEST["liste"]))
         {
-            echo 'ici2';
             throw new Exception("La liste ne peut pas être nul");
         }
         if(!Validation::validerIntPossitif($_REQUEST["liste"]))
         {
-            echo 'ici3';
             throw new Exception("L'ID de la liste doit être positif");
         }
 
-        if(!isset($_REQUEST["nvNom"]))
+        if(!isset($_REQUEST["nomListe"]))
         {
-            echo 'ici4';
             throw new Exception("Le nom doit exister");
         }
-        if(empty($_REQUEST["nvNom"]))
+        if(empty($_REQUEST["nomListe"]))
         {
-            echo 'ici5';
             throw new Exception("Le nouveau nom ne peut pas être nul");
         }
-        $nouveauNom = Validation::nettoyerString($_REQUEST["nvNom"]);
+        $nouveauNom = Validation::nettoyerString($_REQUEST["nomListe"]);
         if(is_null($nouveauNom))
         {
-            echo 'ici6';
             throw new Exception("Le nom entré n'est pas correct");
         }
 
         // Modification du nom de la liste par le modèle
         $mdl->modifierNomListe($_REQUEST["liste"], $nouveauNom);
 
-        /*
-        // Redirection vers l'accueil
-        $_REQUEST["action"] = "seeLists";
-        */
+        $_REQUEST["action"]="accueil";
         new ControleurVisiteur();
     }
 
