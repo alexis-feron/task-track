@@ -32,18 +32,6 @@ class Liste
     {
         return $this->id;
     }
-    public function getTaches() : iterable
-    {
-        return $this->taches;
-    }
-    public function setTaches(array $taches)
-    {
-        $this->taches = $taches;
-    }
-    public function addTache(Tache $t)
-    {
-        $this->taches[] = $t;
-    }
     public function getPublique(): bool
     {
         return $this->publique;

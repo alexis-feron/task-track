@@ -20,7 +20,7 @@ class modeleUtilisateur extends modeleVisiteur {
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         try {
             return $gw->getListesPriv();
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new Exception("Impossible d'acceder aux listes");
         }
     }

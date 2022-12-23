@@ -25,28 +25,6 @@ class GatewayCompte
     }
 
     /**
-     * @brief permet à un utilisateur de modifier son mot de passe et son pseudo
-     */
-    public function modifier(Compte $compteModif): bool
-    {
-        $query = "UPDATE Utilisateur SET pseud=:p, motDePasse=:m";
-        return $this->conn->executeQuery($query, array(
-            ":p" => array($compteModif->getPseudonyme(), PDO::PARAM_STR),
-            ":m" => array($compteModif->getMotDePasse(), PDO::PARAM_STR)));
-
-    }
-
-    /**
-     * @brief permet à un utilisateur de supprimer définitivement son compte de la base de données
-     */
-    public function supprimer(Compte $compteSuppr): bool
-    {
-        $query = "DELETE FROM Utilisateur WHERE pseudo=:i";
-        return $this->conn->executeQuery($query, array(
-            ":i" => array($compteSuppr->getPseudonyme(), PDO::PARAM_INT)));
-    }
-
-    /**
      * @brief permet de recuperer toutes les informations du compte d'un utilisateur
      */
     public function getCompte(string $pseudo) : ?Compte

@@ -46,30 +46,6 @@ class GatewayTache
             ':id' => array($id, PDO::PARAM_INT)));
     }
 
-    public function getTacheTrie(int $l, int $page, int $nbTache) : iterable //renvoie les taches de l trié par nom
-    {
-        $query = "SELECT * FROM Tache WHERE idListe=:i LIMIT :p, :n";
-        if(!$this->conn->executeQuery($query,array(
-            ":i" => array($l, PDO::PARAM_INT),
-            ":p" => array(($page-1)*$nbTache, PDO::PARAM_INT),
-            ":n" => array($nbTache, PDO::PARAM_INT))))
-        {
-            return array();
-        }
-
-        $res = $this->conn->getResults();
-        $taches = array();
-        foreach($res as $tache)
-        {
-            $taches[] = new Tache(
-                $tache["Id"],
-                $tache["Nom"],
-                $tache["idListe"]
-            );
-        }
-        return $taches;
-    }
-
     public function getTache(int $id): array
     {
         $query = "SELECT * FROM Tache WHERE idListe=:i";
@@ -78,8 +54,7 @@ class GatewayTache
         {
             return array();
         }
-        $res = $this->conn->getResults();
-        return $res;
+        return $this->conn->getResults();
     }
 
 

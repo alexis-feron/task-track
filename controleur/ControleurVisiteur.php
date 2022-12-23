@@ -95,6 +95,7 @@ class ControleurVisiteur
 
     /**
      * @brief
+     * @throws Exception
      */
     function accueil() {
         // Si la page n'est pas set, on prend la première page

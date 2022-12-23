@@ -88,6 +88,7 @@ class ControleurUtilisateur extends ControleurVisiteur
 
     /**
      * @brief permet à un utilisateur de voir ses To-Do List privées
+     * @throws Exception
      */
     function afficherListe()
     {

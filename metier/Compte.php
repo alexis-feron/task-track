@@ -22,13 +22,6 @@ class Compte
         return $this->pseudonyme;
     }
 
-    public function setPseudonyme(string $nvPseudo) : void
-    {
-        if(!empty($nvPseudo))
-        {
-            $this->pseudonyme = $nvPseudo;
-        }
-    }
     public function getMotDePasse(): string
     {
         return $this->motDePasse;
@@ -37,14 +30,5 @@ class Compte
     public function getListes()
     {
         return $this->listes;
-    }
-    public function setListe(iterable $listes)
-    {
-        $this->listes = $listes;
-    }
-
-    public function addListe(Liste $l)
-    {
-        $this->listes[] = $l;
     }
 }
