@@ -26,7 +26,7 @@ A l'iut nous passons par:
 
 ## Fonctionnalitées
 
-**!! Les actions suivantes sont disponibles par tous !!**
+***!! Les actions suivantes sont disponibles par tous !!***
 - Créer une To-Do List publique
 - Modifier le nom d'une To-Do List publique
 - Afficher les tâches d'une To-Do List publique
@@ -36,7 +36,7 @@ A l'iut nous passons par:
 - S'inscrire
 - Se connecter
 
-**!! Les actions suivantes ne sont disponibles seulement si on est connecté !!**
+***!! Les actions suivantes ne sont disponibles seulement si on est connecté !!***
 - Créer un To-Do List privée de l'utilisateur connecté
 - Modifier le nom d'une To-Do List privée de l'utilisateur connecté
 - Afficher les tâches d'une To-Do List privée de l'utilisateur connecté
@@ -71,12 +71,12 @@ Start by cloning the repository
 Reproduce the database then enter the logs (dsn, login and password) of it in config/config.php
 At the IUT we go through:
 - ***londres.uca.local/phpmyadmin***  to access to the database
-- ***londres.uca.local/~login/cheminDeVotreDepotCloné*** to see the website
+- ***londres.uca.local/~login/cheminDeVotreDepotCloné*** to see the web page
 
 
 ## Features
 
-**!! The following actions are available to everyone !!!
+***!! The following actions are available to everyone !!!***
 - Create a public To-Do List
 - Modify the name of a public To-Do List
 - Display the tasks of a public To-Do List
@@ -86,7 +86,7 @@ At the IUT we go through:
 - Sign up
 - Sign in
 
-**!! The following actions are only available if you are logged in!
+***!! The following actions are only available if you are logged in!***
 - Create a private To-Do List for the logged in user
 - Change the name of a private To-Do List of the logged-in user
 - Display the tasks of a private To-Do List of the logged-in user
