@@ -41,13 +41,13 @@ class modeleVisiteur{
         return $gw->getListes();
     }
 
-    public function getTaches(int $liste, int $page, int $nbElements)
+    public function getTaches(int $liste)
     {
         // Connection à la base de données
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
 
-        return $gw->getTache($liste, $page, $nbElements);
+        return $gw->getTache($liste);
     }
 
     public function creerListe(string $nom,bool $pub) : bool

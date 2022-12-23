@@ -52,6 +52,10 @@ class ControleurVisiteur
                 case 'tacheFaite':
                     $this->tacheFaite();
                     break;
+                case 'afficherTaches':
+                    $taches=$this->getTaches();
+                    require("vues/liste.php");
+                    break;
                 case 'connexionEnCours':
                     $this->seConnecter();
                 case 'afficherListe':
@@ -260,6 +264,29 @@ class ControleurVisiteur
 
         $_REQUEST["action"]="accueil";
         new ControleurVisiteur();
+    }
+
+    function getTaches()
+    {
+        $mdl = new modeleVisiteur();
+        if(!isset($_REQUEST["liste"]))
+        {
+            throw new Exception("La liste n'existe pas");
+        }
+        if(empty($_REQUEST["liste"]))
+        {
+            throw new Exception("La liste ne peut pas être nul");
+        }
+        if(!Validation::validerIntPossitif($_REQUEST["liste"]))
+        {
+            throw new Exception("L'ID de la liste doit être positif");
+        }
+
+        // Modification du nom de la liste par le modèle
+        return $mdl->getTaches($_REQUEST["liste"]);
+
+        //$_REQUEST["action"]="accueil";
+        //new ControleurVisiteur();
     }
 
     function supprimerListe()

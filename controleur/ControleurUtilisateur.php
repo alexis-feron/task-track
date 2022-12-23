@@ -53,6 +53,9 @@ class ControleurUtilisateur extends ControleurVisiteur
                 case 'tacheFaite':
                     $this->tacheFaite();
                     break;
+                case 'afficherTaches':
+                    require("vues/liste.php");
+                    break;
                 case 'deconnexion':
                     $this->deconnexion();
                     break;
