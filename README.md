@@ -62,6 +62,7 @@ We have created a To-Do list in which you can create lists made up of tasks. The
 - SQL(PhpMyAdmin)
 - HTML
 - CSS
+- JS
 
 
 ## Installation and use
