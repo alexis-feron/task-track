@@ -71,19 +71,18 @@ class modeleVisiteur{
         return $gw->supprimer($listID);
     }
 
-    public function creerTache(string $nom, int $list) : bool
+    public function creerTache(string $nom, int $liste) : bool
     {
         global $dsn, $login, $mdp;
-
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
-        return $gw->inserer($nom, $list);
+        return $gw->inserer(rand(1000,2000000),$nom, $liste);
     }
 
     public function tacheFaite(int $id): bool
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
-        return $gw->modifier($gw->getTache($id));
+        return $gw->tacheFaite($id);
     }
 
     public function supprimerTache(int $id) : bool

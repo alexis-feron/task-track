@@ -47,6 +47,9 @@ class ControleurVisiteur
                     $this->modifierTache();
                     break;
                 case 'ajouterTache':
+                    require("vues/ajoutTache.php");
+                    break;
+                case 'ajouteLaTache':
                     $this->ajouterTache();
                     break;
                 case 'tacheFaite':
@@ -319,48 +322,41 @@ class ControleurVisiteur
 
     function ajouterTache()
     {
-        $mdl = new ModeleVisiteur();
+        $mdl = new modeleVisiteur();
 
-        if(!isset($_REQUEST["nomTache"]))
+        if(!isset($_REQUEST["nomNvTache"]))
         {
             throw new Exception("La tache n'existe pas");
         }
-        if(empty($_REQUEST["nomTache"]))
+        if(empty($_REQUEST["nomNvTache"]))
         {
             throw new Exception("Le nom de la nouvelle tache ne doit pas être vide");
         }
 
-        // Si le commentaire de la tache n'est pas set, on lève une exception
-        if(!isset($_REQUEST["commentaireTache"]))
-        {
-            throw new Exception("Le commentaire de la tache est introuvable!");
-        }
-
         // Si le numéro de la liste est vide ou n'est pas set, on lève une exception
-        if(!isset($_REQUEST["list"]))
+        if(!isset($_REQUEST["liste"]))
         {
             throw new Exception("Le numero de liste doit exister");
         }
-        if(empty($_REQUEST["list"]))
+        if(empty($_REQUEST["liste"]))
         {
             throw new Exception("Le numero de liste doit être définit");
         }
 
         // Validation des paramètres
-        $list = Validation::validerIntPossitif($_REQUEST["liste"]) ? $_REQUEST["liste"] : null;
-        $nom = Validation::nettoyerString($_REQUEST["nomTache"]);
+        $liste = Validation::validerIntPossitif($_REQUEST["liste"]) ? $_REQUEST["liste"] : null;
+        $nom = Validation::nettoyerString($_REQUEST["nomNvTache"]);
 
         // Verification des paramètre, si il y en a 1 qui vas pas, on lève une exception
-        if(is_null($nom) || is_null($list))
+        if(is_null($nom) || is_null($liste))
         {
             throw new Exception("Le nom, la liste ou le commentaire de la nouvelle tache contiennent des caractèrent illégales!");
         }
 
         // Création de la tache par le modèle
-        $mdl->creerTache($nom, $list);
+        $mdl->creerTache($nom, $liste);
 
-        $_REQUEST["action"] = "seeList";
-        $_REQUEST["list"] = $list;
+        $_REQUEST["action"] = "accueil";
         new ControleurVisiteur();
 
     }
@@ -422,35 +418,12 @@ class ControleurVisiteur
 
     function TacheFaite()
     {
-        // estFait doit être un tableau des taches faites
-        if(isset($_REQUEST["estFait"]))
-        {
-            if(!is_array($_REQUEST["estFait"]))
-            {
-                throw new Exception("La liste des taches faites doit être un tableau.");
-            }
-        }
-        else
-        {
-            $_REQUEST["estFait"] = array();
-        }
+        $mdl = new modeleVisiteur();
 
-        // exist contient toutes les taches de la page où était l'utilisateur
-        if(!isset($_REQUEST["exist"]))
-        {
-            throw new Exception("Aucune tâche n'est définit");
-        }
-        if(!is_array($_REQUEST["exist"]))
-        {
-            throw new Exception("La liste des taches doit être un tableau.");
-        }
+        $mdl->tacheFaite($_REQUEST["tache"]);
 
-        $mdl = new ModeleVisiteur();
+        $_REQUEST["action"] = "accueil";
 
-        $list = $mdl->tacheFaite($_REQUEST["tache"]);
-
-        $_REQUEST["action"] = "seeList";
-        $_REQUEST["list"] = $list;
         new ControleurVisiteur();
     }
 

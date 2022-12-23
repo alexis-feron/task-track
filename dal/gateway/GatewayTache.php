@@ -12,14 +12,23 @@ class GatewayTache
         $this->conn = $conn;
     }
 
-    public function inserer(string $nom, int $listeId) : bool
+    public function inserer(int $id, string $nom, int $idListe) : bool
     {
-        $query = "INSERT INTO Tache(nom, faite, listeId) VALUES( :n, :f, :i)";
+        $query = "INSERT INTO Tache(id, nom, faite, idListe) VALUES(:i, :n, :f, :l)";
 
         return $this->conn->executeQuery($query, array(
+            ':i' => array($id, PDO::PARAM_INT),
             ':n' => array($nom, PDO::PARAM_STR),
             ':f'=> array(false, PDO::PARAM_BOOL),
-            ':i' => array($listeId, PDO::PARAM_INT)));
+            ':l' => array($idListe, PDO::PARAM_INT)));
+    }
+
+    public function tacheFaite(int $id) : bool
+    {
+        $query = "UPDATE Tache SET faite=!faite WHERE id = :i";
+
+        return $this->conn->executeQuery($query, array(
+            ':i' => array($id, PDO::PARAM_INT)));
     }
 
     public function modifier(int $id,string $nvnom)

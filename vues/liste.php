@@ -8,7 +8,7 @@
 <body>
     <?php require("barreNav.php") ?>
     <br>
-    <input onclick="location.href='?action=ajouterTache'" type="button" value="Ajouter Tache">
+    <input onclick="location.href='?action=ajouterTache&liste=<?= $_REQUEST["liste"]?>'" type="button" value="Ajouter Tache">
     <table>
         <thead>
             <tr>
@@ -25,7 +25,7 @@
                 <th><?= $tache->nom ?></th>
                 <th><?php if($tache->faite==1) echo 'oui'; else echo 'non'?></th>
                 <th>
-                    <input onclick="location.href='?action=afficherTaches&tache=<?=$tache->id?>'" type="button" value="Tache Faite">
+                    <input onclick="location.href='?action=tacheFaite&tache=<?=$tache->id?>'" type="button" value="Tache Faite">
                     <input onclick="location.href='?action=modifierTache&tache=<?=$tache->id?>'" type="button" value="Modifier Nom">
                     <input onclick="deleteT(<?=$tache->id?>)" type="button" value="Supprimer Tache">
                     <script>
