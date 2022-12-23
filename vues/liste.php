@@ -7,8 +7,8 @@
 </head>
 <body>
     <?php require("barreNav.php") ?>
-    <br>
-    <input onclick="location.href='?action=ajouterTache&liste=<?= $_REQUEST["liste"]?>'" type="button" value="Ajouter Tache">
+    <br><input onclick="location.href='?action=ajouterTache&liste=<?= $_REQUEST["liste"]?>'" type="button" value="Ajouter Tache">
+    <br><p>Voici la liste de toutes les taches de la liste :</p>
     <table>
         <thead>
             <tr>
