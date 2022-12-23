@@ -419,11 +419,8 @@ class ControleurVisiteur
     function TacheFaite()
     {
         $mdl = new modeleVisiteur();
-
         $mdl->tacheFaite($_REQUEST["tache"]);
-
         $_REQUEST["action"] = "accueil";
-
         new ControleurVisiteur();
     }
 
@@ -431,7 +428,7 @@ class ControleurVisiteur
 
     function supprimerTache()
     {
-        $mdl = new ModeleVisiteur();
+        $mdl = new modeleVisiteur();
 
         // Si la tache est vide, pas set ou <= 0, on lève une exception
         if(!isset($_REQUEST["tache"]))
@@ -447,29 +444,10 @@ class ControleurVisiteur
             throw new Exception("Le parametre task doit être un entier strictement superieur à 0");
         }
 
-        //TODO: verifier que c'est bien la tache de l'utilisateur.trice
-
-        if(!isset($_REQUEST["liste"]))
-        {
-            throw new Exception("La liste doit exister");
-        }
-        if(empty($_REQUEST["liste"]))
-        {
-            throw new Exception("La liste doit doit contenir une valeur");
-        }
-        if(!Validation::validerIntPossitif($_REQUEST["liste"]))
-        {
-            throw new Exception("L'ID de la liste doit être positif");
-        }
-        //TODO: verifier que c'est bien la list de l'utilisateur.trice et que c'est bien une tache de la liste
-
         // Suppression de la tache par le modèle
         $mdl->supprimerTache($_REQUEST["tache"]);
 
-        /*
-        //Redirection vers l'affichage de la liste modifiée
-        $_REQUEST["action"] = "seeList";
-        */
+        $_REQUEST["action"] = "accueil";
         new ControleurVisiteur();
     }
 
