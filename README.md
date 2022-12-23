@@ -14,6 +14,7 @@ Nous avons réalisé une To-Do liste dans laquelle on peut creer des listes comp
 - SQL(PhpMyAdmin)
 - HTML
 - CSS
+- JS
 
 
 ## Installation et utilisation
@@ -23,21 +24,26 @@ A l'iut nous passons par:
 - ***londres.uca.local/phpmyadmin***  pour la base de donnée  
 - ***londres.uca.local/~login/cheminDeVotreDepotCloné*** pour voir la page
 
-
 ## Fonctionnalitées
 
-- Créer une To-Do List publique (si nous ne nous somme pas connecté)
+**!! Les actions suivantes sont disponibles par tous !!**
+- Créer une To-Do List publique
 - Modifier le nom d'une To-Do List publique
+- Afficher les tâches d'une To-Do List publique
+- Supprimer une To-Do List publique
 - Ajouter une tâche à une To-Do List publique
-- Modifier une tâche d'une To-Do List publique
+- Modifier le nom d'une tâche et si elle est réalisée ou non pour une To-Do List publique
 - S'inscrire
 - Se connecter
-    - **!! les actions suivantes ne sont disponibles seulement si on est connecté !!**
-    - Créer un To-Do List privée (si nous nous somme connecté)
-    - Modifier le nom d'une To-Do List privée
-    - Ajouter une tâche à une To-Do List privée
-    - Modifier une tâche d'une To-Do List privée
-    - Se déconnecter
+
+**!! Les actions suivantes ne sont disponibles seulement si on est connecté !!**
+- Créer un To-Do List privée de l'utilisateur connecté
+- Modifier le nom d'une To-Do List privée de l'utilisateur connecté
+- Afficher les tâches d'une To-Do List privée de l'utilisateur connecté
+- Supprimer une To-Do List privée de l'utilisateur connecté
+- Ajouter une tâche à une To-Do List privée de l'utilisateur connecté
+- Modifier le nom d'une tâche et si elle est réalisée ou non pour une To-Do List privée de l'utilisateur connecté
+- Se déconnecter
 
 
 ## --------------------------- English Version ---------------------------
@@ -69,16 +75,21 @@ At the IUT we go through:
 
 ## Features
 
-- Create a public To-Do List (if you haven't logged in)
-- Change the name of a public To-Do List
+**!! The following actions are available to everyone !!!
+- Create a public To-Do List
+- Modify the name of a public To-Do List
+- Display the tasks of a public To-Do List
+- Delete a public To-Do List
 - Add a task to a public To-Do List
-- Edit a task from a public To-Do List
-- Register
-- To log in
-  -**!! the following actions are only available if you are logged in !!**
-  - Create a private To-Do List (if we are logged in)
-  - Change the name of a private To-Do List
-  - Add a task to a private To-Do List
-  - Edit a task from a private To-Do List
-  - Sign out
+- Change the name of a task and whether it is done or not for a public To-Do List
+- Sign up
+- Sign in
 
+**!! The following actions are only available if you are logged in!
+- Create a private To-Do List for the logged in user
+- Change the name of a private To-Do List of the logged-in user
+- Display the tasks of a private To-Do List of the logged-in user
+- Delete a private To-Do List of the logged-in user
+- Add a task to a private To-Do List of the connected user
+- Change the name of a task and whether it is done or not for a private To-Do List of the logged-in user
+- Log out
