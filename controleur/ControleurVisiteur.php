@@ -183,10 +183,6 @@ class ControleurVisiteur
         {
             throw new Exception("Le mot de passe renseigné est nul");
         }
-        if(strlen($_REQUEST["mdp"]) < 8)
-        {
-            throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
-        }
 
         $pseudo = Validation::nettoyerString($_REQUEST["pseudonyme"]);
         $email=$_REQUEST["email"];
