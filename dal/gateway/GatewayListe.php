@@ -24,6 +24,9 @@ class GatewayListe
     }
     */
 
+    /**
+     * @brief créer une nouvelle To-Do List en base de donnée
+     */
     public function inserer(Liste $liste): bool
     {
         $query = "INSERT INTO Liste(id,nom,createur,publique) VALUES(:i, :n, :cre, :pu)";
@@ -35,6 +38,9 @@ class GatewayListe
         ));
     }
 
+    /**
+     * @brief supprimer une To-Do List de la base de donée
+     */
     public function supprimer(int $listeId): bool
     {
         $query = "DELETE FROM Liste where id =:i ";
@@ -42,6 +48,9 @@ class GatewayListe
             ':i' => array($listeId, PDO::PARAM_INT)));
     }
 
+    /**
+     * @brief modifie une To-Do list en base de donnée
+     */
     public function modifier(int $id, string $nom) : bool
 	{
         $query = "UPDATE Liste SET nom=:n WHERE id=:id";
@@ -50,6 +59,9 @@ class GatewayListe
             ":id" => array($id, PDO::PARAM_INT)));
     }
 
+    /**
+     * @brief
+     */
     public function getListeParNom(int $page, int $nbListes) : array
     {
         $gwTache = new GatewayTache($this->conn);
@@ -77,6 +89,9 @@ class GatewayListe
         return $listes;
     }
 
+    /**
+     * @brief
+     */
     public function Actualiser(Liste $l, int $page, int $nbTaches): Liste
     {
         $gwTache = new GatewayTache($this->conn);
@@ -84,6 +99,9 @@ class GatewayListe
         return $l;
     }
 
+    /**
+     * @brief renvoie la liste dont l'identifiant est placé en paramètre
+     */
     public function getListe(int $id): Liste
     {
         $gwTache = new GatewayTache($this->conn);
@@ -107,6 +125,9 @@ class GatewayListe
         );
     }
 
+    /**
+     * @brief renvoie les To-Do List publiques
+     */
     public function getListes(): array
     {
         $gw=new GatewayTache($this->conn);
@@ -121,6 +142,10 @@ class GatewayListe
         }
         return $listes;
     }
+
+    /**
+     * @brief renvoie les To-Do List privées d'un utilisateur
+     */
     public function getListesPriv(): array
     {
         $gw=new GatewayTache($this->conn);
@@ -142,7 +167,9 @@ class GatewayListe
         return $listes;
     }
 
-
+    /**
+     * @brief renvoie les To-Do List d'un utilisateur
+     */
     public function getListeParCreateur(int $page, int $nbListes, string $createur) : iterable
     {
         $gwTache = new GatewayTache($this->conn);
@@ -173,7 +200,9 @@ class GatewayListe
         return $listes;
     }
 
-
+    /**
+     * @brief compte le nombre de To-Do List d'un utilisateur
+     */
     public function getNbListesParCreateur(string $createur): int
     {
         $requette = "SELECT COUNT(*) FROM Liste WHERE Createur = :c";

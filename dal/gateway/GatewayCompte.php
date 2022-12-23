@@ -12,7 +12,9 @@ class GatewayCompte
         $this->conn = $conn;
     }
 
-
+    /**
+     * @brief permet à un visiteur de creer un compte
+     */
     public function CreerCompte(string $pseudo, string $mdp) : bool
     {
         $query = "INSERT INTO Utilisateur(pseudo, motDePasse) VALUSES(:p, :m)";
@@ -21,6 +23,9 @@ class GatewayCompte
             ":m" => array($mdp, PDO::PARAM_STR)));
     }
 
+    /**
+     * @brief permet à un utilisateur de modifier son mot de passe et son pseudo
+     */
     public function modifier(Compte $compteModif)
     {
         $query = "UPDATE Utilisateur SET pseud=:p, motDePasse=:m";
@@ -30,6 +35,9 @@ class GatewayCompte
 
     }
 
+    /**
+     * @brief permet à un utilisateur de supprimer définitivement son compte de la base de donnée
+     */
     public function supprimer(Compte $compteSuppr)
     {
         $query = "DELETE FROM Utilisateur WHERE pseudo=:i";
@@ -37,7 +45,9 @@ class GatewayCompte
             ":i" => array($compteSuppr->getPseudonyme(), PDO::PARAM_INT)));
     }
 
-
+    /**
+     * @brief permet de recuperer toutes les informations du compte d'un utilisateur
+     */
     public function getCompte(string $pseudo) : ?Compte
     {
         $gw = new GatewayListe($this->conn);

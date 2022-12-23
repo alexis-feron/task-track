@@ -68,6 +68,9 @@ class ControleurUtilisateur extends ControleurVisiteur
         }
     }
 
+    /**
+     * @brief permet à un utilisateur de se déconnecter de sa session
+     */
     function deconnexion()
     {
         $mdl = new ModeleUtilisateur();
@@ -77,8 +80,11 @@ class ControleurUtilisateur extends ControleurVisiteur
 
         // Redirection vers la page de connection
         new ControleurVisiteur();
-
     }
+
+    /**
+     * @brief permet à un utilisateur de voir ses To-Do List privées
+     */
     function afficherListe()
     {
         $modele=new modeleUtilisateur();

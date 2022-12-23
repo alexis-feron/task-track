@@ -85,7 +85,9 @@ class ControleurVisiteur
         }
     }
 
-
+    /**
+     * @brief
+     */
     function accueil() {
         // Si la page n'est pas set, on prend la première page
         if(!isset($_REQUEST["page"]) || empty($_REQUEST["page"])) {
@@ -120,7 +122,9 @@ class ControleurVisiteur
         require("vues/accueil.php");
     }
 
-
+    /**
+     * @brief permet à un visiteur de se connecter s'il a déjà un compte
+     */
     function seConnecter()
     {
         if(!isset($_REQUEST["pseudonyme"]) || !isset($_REQUEST["motDePasse"]))
@@ -200,6 +204,10 @@ class ControleurVisiteur
         }
 
     */
+
+    /**
+     * @brief permet à un visiteur/utilisateur de creer une nouvelle To-Do List
+     */
     function ajoutListe()
     {
         $mdl = new modeleVisiteur();
@@ -232,6 +240,9 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur de modifier une To-Do List
+     */
     function modifierListe()
     {
         $mdl = new modeleVisiteur();
@@ -269,6 +280,9 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur de voir les taches d'une To-Do List
+     */
     function getTaches()
     {
         $mdl = new modeleVisiteur();
@@ -292,6 +306,9 @@ class ControleurVisiteur
         //new ControleurVisiteur();
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur de supprimer une To-Do List s'il en a les droits
+     */
     function supprimerListe()
     {
         $mdl = new modeleVisiteur();
@@ -320,6 +337,9 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur d'ajouter une tâche à une To-Do List
+     */
     function ajouterTache()
     {
         $mdl = new modeleVisiteur();
@@ -361,6 +381,9 @@ class ControleurVisiteur
 
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur de modifier une tache
+     */
     function modifierTache()
     {
         $mdl = new modeleVisiteur();
@@ -416,6 +439,9 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
+    /**
+     * @brief permet à un visiteur/utilisateur de changer le statut fait d'une tâche
+     */
     function TacheFaite()
     {
         $mdl = new modeleVisiteur();
@@ -424,8 +450,9 @@ class ControleurVisiteur
         new ControleurVisiteur();
     }
 
-
-
+    /**
+     * @brief permet à un visiteur/utilisateur de supprimer une tâche d'une To-Do List
+     */
     function supprimerTache()
     {
         $mdl = new modeleVisiteur();
@@ -450,7 +477,4 @@ class ControleurVisiteur
         $_REQUEST["action"] = "accueil";
         new ControleurVisiteur();
     }
-
-
-
 }
