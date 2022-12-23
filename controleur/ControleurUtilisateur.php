@@ -1,10 +1,15 @@
 <?php
 require("controleur/ControleurVisiteur.php");
+/**
+ * Controleur pour les utilisateurs
+ */
 class ControleurUtilisateur extends ControleurVisiteur
 {
+    /**
+     * Constructeur d'un controleur pour les utilisateurs
+     */
     function __construct()
     {
-        //parent::__construct();
         try {
             if(!isset($_REQUEST["action"]))
             {
@@ -22,10 +27,9 @@ class ControleurUtilisateur extends ControleurVisiteur
                 case NULL:
                     $this->afficherListe();
                     break;
-                /*case 'sInscrire':
+                case 'sInscrire':
                     $this->sInscrire();
                     break;
-                */
                 case 'ajoutListe':
                     require("vues/ajoutListe.php");
                     break;
@@ -64,7 +68,7 @@ class ControleurUtilisateur extends ControleurVisiteur
                     require("vues/connexion.php");
             }
         } catch (Exception $e) {
-            //require("vues/erreur.php");
+            require("vues/erreur.php");
         }
     }
 

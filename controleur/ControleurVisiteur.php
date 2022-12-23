@@ -1,10 +1,12 @@
 <?php
-
-//http://londres.uca.local/~nosillard/PHP/PHP-ToDo-List/index.php
-//http://londres.uca.local/phpmyadmin/
-
+/**
+ * Controleur pour les visiteurs
+ */
 class ControleurVisiteur
 {
+    /**
+     * Constructeur d'un controleur pour les visiteurs
+     */
     function __construct()
     {
         try {
@@ -21,10 +23,9 @@ class ControleurVisiteur
                 case NULL:
                     $this->accueil();
                     break;
-                /*case 'sInscrire':
+                case 'sInscrire':
                     $this->sInscrire();
                     break;
-                */
                 case 'ajoutListe':
                     require("vues/ajoutListe.php");
                     break;
@@ -61,6 +62,7 @@ class ControleurVisiteur
                     break;
                 case 'connexionEnCours':
                     $this->seConnecter();
+                    break;
                 case 'afficherListe':
                     break;
                 case 'seConnecter':
@@ -124,6 +126,7 @@ class ControleurVisiteur
 
     /**
      * @brief permet à un visiteur de se connecter s'il a déjà un compte
+     * @throws Exception
      */
     function seConnecter()
     {
@@ -152,61 +155,61 @@ class ControleurVisiteur
             throw new Exception("Erreur lors de la connexion au compte");
         }
     }
-    /*
-        function sInscrire()
+
+    /**
+     * @throws Exception
+     */
+    function sInscrire()
+    {
+        if(!isset($_REQUEST["nom"]))
         {
-            if(!isset($_REQUEST["nom"]))
-            {
-                throw new Exception("Le pseudonyme doit être renseigné");
-            }
-            if(empty($_REQUEST["nom"]))
-            {
-                throw new Exception("Le pseudonyme renseigné est nul");
-            }
-            if(strlen($_REQUEST["nom"]) < 5)
-            {
-                throw new Exception("Le pseudonyme doit contenir au minimum 5 caractères");
-            }
-
-
-            if(!isset($_REQUEST["mdp1"]))
-            {
-                throw new Exception("Le mot de passe n'a pas été envoyé au serveur");
-            }
-            if(empty($_REQUEST["mdp1"]))
-            {
-                throw new Exception("Le mot de passe renseigné est nul");
-            }
-            if(strlen($_REQUEST["mdp1"]) < 8)
-            {
-                throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
-            }
-            if($_REQUEST["mdp1"] != $_REQUEST["mdp2"])
-            {
-                throw new Exception("Les mots de passes sont différents");
-            }
-
-            $pseudo = Validation::nettoyerString($_REQUEST["nom"]);
-
-            if(is_null($pseudo))
-            {
-                throw new Exception("Le pseudonyme est nul");
-            }
-            $mdl = new ModeleUtilisateur();
-            if(!$mdl->sInscrire($pseudo, $_REQUEST["mdp1"]))
-            {
-                throw new Exception("Erreur lors de l'inscription");
-            }
-            $_REQUEST["action"] = "seConnecter";
-            $_REQUEST["pseudonyme"] = $pseudo;
-            $_REQUEST["motDePasse"] = $_REQUEST["mdp1"];
-            new ControleurVisiteur();
+            throw new Exception("Le pseudonyme doit être renseigné");
+        }
+        if(empty($_REQUEST["nom"]))
+        {
+            throw new Exception("Le pseudonyme renseigné est nul");
+        }
+        if(strlen($_REQUEST["nom"]) < 5)
+        {
+            throw new Exception("Le pseudonyme doit contenir au minimum 5 caractères");
         }
 
-    */
+        if(!isset($_REQUEST["mdp1"]))
+        {
+            throw new Exception("Le mot de passe n'a pas été envoyé au serveur");
+        }
+        if(empty($_REQUEST["mdp1"]))
+        {
+            throw new Exception("Le mot de passe renseigné est nul");
+        }
+        if(strlen($_REQUEST["mdp1"]) < 8)
+        {
+            throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
+        }
+        if($_REQUEST["mdp1"] != $_REQUEST["mdp2"])
+        {
+            throw new Exception("Les mots de passes sont différents");
+        }
+
+        $pseudo = Validation::nettoyerString($_REQUEST["nom"]);
+
+        if(is_null($pseudo))
+        {
+            throw new Exception("Le pseudonyme est nul");
+        }
+        $mdl = new modeleVisiteur();
+        $mdl->sInscrire($pseudo, $_REQUEST["mdp1"]);
+
+        $_REQUEST["action"] = "seConnecter";
+        $_REQUEST["pseudonyme"] = $pseudo;
+        $_REQUEST["motDePasse"] = $_REQUEST["mdp1"];
+        new ControleurVisiteur();
+    }
+
 
     /**
      * @brief permet à un visiteur/utilisateur de creer une nouvelle To-Do List
+     * @throws Exception
      */
     function ajoutListe()
     {
@@ -227,7 +230,6 @@ class ControleurVisiteur
         }
         $nom = Validation::nettoyerString($_REQUEST["nomNvleListe"]);
 
-        // test si nettoyage a fonctionné
         if(is_null($nom))
         {
             throw new Exception("Veuillez entrer un nom");
@@ -242,6 +244,7 @@ class ControleurVisiteur
 
     /**
      * @brief permet à un visiteur/utilisateur de modifier une To-Do List
+     * @throws Exception
      */
     function modifierListe()
     {
@@ -282,8 +285,9 @@ class ControleurVisiteur
 
     /**
      * @brief permet à un visiteur/utilisateur de voir les taches d'une To-Do List
+     * @throws Exception
      */
-    function getTaches()
+    function getTaches(): array
     {
         $mdl = new modeleVisiteur();
         if(!isset($_REQUEST["liste"]))
@@ -301,13 +305,11 @@ class ControleurVisiteur
 
         // Modification du nom de la liste par le modèle
         return $mdl->getTaches($_REQUEST["liste"]);
-
-        //$_REQUEST["action"]="accueil";
-        //new ControleurVisiteur();
     }
 
     /**
      * @brief permet à un visiteur/utilisateur de supprimer une To-Do List s'il en a les droits
+     * @throws Exception
      */
     function supprimerListe()
     {
@@ -326,8 +328,6 @@ class ControleurVisiteur
             throw new Exception("L'ID de la liste doit être positif");
         }
 
-
-        // TODO: verifier que c'est bien une liste de l'utilisateur, comparer getCreateur et login
         $mdl->supprimerListe($_REQUEST["liste"]);
 
         // Redirection vers l'accueil
@@ -339,6 +339,7 @@ class ControleurVisiteur
 
     /**
      * @brief permet à un visiteur/utilisateur d'ajouter une tâche à une To-Do List
+     * @throws Exception
      */
     function ajouterTache()
     {
@@ -378,11 +379,11 @@ class ControleurVisiteur
 
         $_REQUEST["action"] = "accueil";
         new ControleurVisiteur();
-
     }
 
     /**
      * @brief permet à un visiteur/utilisateur de modifier une tache
+     * @throws Exception
      */
     function modifierTache()
     {
@@ -431,9 +432,6 @@ class ControleurVisiteur
         // Modification de la tache par le modèle
         $mdl->modifierNomTache($_REQUEST["tache"], $nom);
 
-        // Définition des variables nécessaire à la vue
-        $liste = $_REQUEST["liste"];
-
         // Redirection vers l'affichage le la liste list
         $_REQUEST["action"] = "seeList";
         new ControleurVisiteur();
@@ -452,6 +450,7 @@ class ControleurVisiteur
 
     /**
      * @brief permet à un visiteur/utilisateur de supprimer une tâche d'une To-Do List
+     * @throws Exception
      */
     function supprimerTache()
     {

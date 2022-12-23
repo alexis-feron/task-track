@@ -21,4 +21,3 @@ class Connexion extends PDO{
         return $this->stmt->fetchall();
     }
 }
-?>

@@ -2,16 +2,16 @@
 class Tache
 {
     // Attributs
-    private $nom;
-    private $faite;
-    private $id;
-    private $listeID;
+    private string $nom;
+    private bool $faite;
+    private int $id;
+    private int $listeID;
 
     // Constructeur
     public function __construct(string $nom, int $tacheID, int $listeID)
     {
         $this->nom = $nom;
-        $this->fait = false;
+        $this->faite = false;
         $this->id = $tacheID;
         $this->listeID = $listeID;
     }
@@ -29,19 +29,19 @@ class Tache
 
     public function estFait() : bool
     {
-        return $this->fait;
+        return $this->faite;
     }
 
-    public function setFait(bool $fait)
+    public function setFait(bool $faite)
     {
-        $this->fait = $fait;
+        $this->faite = $faite;
     }
 
     public function getId() : int
     {
         return $this->id;
     }
-    public function getListeID()
+    public function getListeID(): int
     {
         return $this->listeID;
     }

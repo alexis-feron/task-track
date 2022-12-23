@@ -6,6 +6,7 @@ class modeleVisiteur{
 
     /**
      * @brief permet à l'utilisateur de se connecter s'il a déja un compte
+     * @throws Exception
      */
     public function connexion(string $log, string $motPasse) : Compte
     {
@@ -40,14 +41,17 @@ class modeleVisiteur{
         return false;
     }
 
-    public function getListes()
+    /**
+     * @throws Exception
+     */
+    public function getListes(): array
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         return $gw->getListes();
     }
 
-    public function getTaches(int $liste)
+    public function getTaches(int $liste): array
     {
         // Connection à la base de données
         global $dsn, $login, $mdp;
@@ -134,6 +138,7 @@ class modeleVisiteur{
 
     /**
      * @brief
+     * @throws Exception
      */
     public function getMaxPageListes(string $createur, int $nbElements) : int
     {
@@ -148,6 +153,7 @@ class modeleVisiteur{
 
     /**
      * @brief renvoie le nom de la liste
+     * @throws Exception
      */
     public function getNomListe(int $id): string
     {
@@ -158,6 +164,7 @@ class modeleVisiteur{
 
     /**
      * @brief
+     * @throws Exception
      */
     public function getMaxPageTaches(int $listeID, int $nbElements) : int
     {
@@ -165,6 +172,10 @@ class modeleVisiteur{
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
         $nbTotal = $gw->getNbTacheParListeID($listeID);
         return ceil($nbTotal/$nbElements);
+    }
+
+    public function sInscrire(string $pseudo, mixed $mdp1)
+    {
     }
 
 

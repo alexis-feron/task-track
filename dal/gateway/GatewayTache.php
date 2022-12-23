@@ -31,7 +31,7 @@ class GatewayTache
             ':i' => array($id, PDO::PARAM_INT)));
     }
 
-    public function modifier(int $id,string $nvnom)
+    public function modifier(int $id,string $nvnom): bool
     {
         $query = "UPDATE Tache SET nom = :n WHERE id = :i";
         return $this->conn->executeQuery($query,array(
@@ -39,7 +39,7 @@ class GatewayTache
             ':i' => array($id, PDO::PARAM_BOOL)));
     }
 
-    public function supprimer(int $id)
+    public function supprimer(int $id): bool
     {
         $query = "DELETE FROM Tache WHERE id =:id";
         return $this->conn->executeQuery($query,array(
@@ -70,7 +70,7 @@ class GatewayTache
         return $taches;
     }
 
-    public function getTache(int $id)
+    public function getTache(int $id): array
     {
         $query = "SELECT * FROM Tache WHERE idListe=:i";
         if(!$this->conn->executeQuery($query,array(

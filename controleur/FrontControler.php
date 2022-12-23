@@ -11,14 +11,14 @@ class FrontControler{
                 "deconnexion"
             ],
             "Visiteur" => [
-                "seConnecter", /*"sInscrire",*/ "accueil", "connexionEnCours",
+                "seConnecter", "sInscrire", "accueil", "connexionEnCours",
                 "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
                 "supprimerTache", "modifierTache", "ajouterTache","tacheFaite","ajouteLaListe","modifieLaListe","afficherTaches"
             ]
         );
         session_start();
         $modele = new modeleVisiteur();
-        $action = Validation::nettoyerString(isset($_GET["action"]) ? $_GET["action"] : "");
+        $action = Validation::nettoyerString($_GET["action"] ?? "");
         $utilisateur=$modele->estConnecte();
         if(in_array($action,$actions['Utilisateur'])) {
             if ($utilisateur == null) {

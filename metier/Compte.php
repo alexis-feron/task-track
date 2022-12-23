@@ -2,9 +2,9 @@
 
 class Compte
 {
-    private $pseudonyme;
-    private $listes;
-    private $motDePasse;
+    private string $pseudonyme;
+    private iterable $listes;
+    private string $motDePasse;
 
     public function __construct(string $nom,  iterable $listes, string $motDePasse)
     {
@@ -29,7 +29,7 @@ class Compte
             $this->pseudonyme = $nvPseudo;
         }
     }
-    public function getMotDePasse()
+    public function getMotDePasse(): string
     {
         return $this->motDePasse;
     }

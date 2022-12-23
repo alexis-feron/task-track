@@ -12,12 +12,17 @@ class modeleUtilisateur extends modeleVisiteur {
 
     /**
      * @brief permet d'avoir les listes privées de l'utilisateur
+     * @throws Exception
      */
     public function getListesPriv()
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        return $gw->getListesPriv();
+        try {
+            return $gw->getListesPriv();
+        } catch (Exception $e) {
+            throw new Exception("Impossible d'acceder aux listes");
+        }
     }
 
 

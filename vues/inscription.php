@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,6 @@
                 <th>Mot de passe</th>
                 <td><input type="password"></td>
             </tr>
-            </tbody>
         </table>
         <input value="Annuler" type="reset">
         <input value="S'inscrire" type="submit">

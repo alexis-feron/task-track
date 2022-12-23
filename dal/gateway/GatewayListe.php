@@ -12,17 +12,6 @@ class GatewayListe
     {
         $this->conn = $conn;
     }
-    //ajoute liste ds la BD
-    /*public function inserer(Liste $l): bool
-    {
-        $query = "INSERT INTO Liste VALUES (:i, :cre, :pu, :n)";
-        return $this->conn->executeQuery($query, array(
-            ':i' => array($l->getId(), PDO::PARAM_INT),
-            ':cre' => array($l->getCreateur(), PDO::PARAM_STR),
-            ':pu' => array($l->getPublique(), PDO::PARAM_STR),
-            ':n' => array($l->getNom()), PDO::PARAM_STR));
-    }
-    */
 
     /**
      * @brief créer une nouvelle To-Do List en base de donnée
@@ -60,47 +49,8 @@ class GatewayListe
     }
 
     /**
-     * @brief
-     */
-    public function getListeParNom(int $page, int $nbListes) : array
-    {
-        $gwTache = new GatewayTache($this->conn);
-        $lites = array();
-        $requete = "SELECT * FROM Liste ORDER BY nom  LIMIT :p+:nb, :nb";
-        $isOK=$this->conn->executeQuery($requete, array(
-            ":p" => array($page-1, PDO::PARAM_INT),
-            ":nb" => array($nbListes, PDO::PARAM_INT)));
-        if(!$isOK)
-        {
-            return array();
-        }
-
-        $res = $this->conn->getResults();
-
-        foreach($res as $liste)
-        {
-            $listes[] = new Liste(
-                $liste["id"],
-                $liste["nom"],
-                $liste["createur"],
-                $liste["publique"],
-                $gwTache->getTacheTrie($liste["listeID"], 1, 10));
-        }
-        return $listes;
-    }
-
-    /**
-     * @brief
-     */
-    public function Actualiser(Liste $l, int $page, int $nbTaches): Liste
-    {
-        $gwTache = new GatewayTache($this->conn);
-        $l->setTaches($gwTache->getTache($l->getId()));
-        return $l;
-    }
-
-    /**
      * @brief renvoie la liste dont l'identifiant est placé en paramètre
+     * @throws Exception
      */
     public function getListe(int $id): Liste
     {
@@ -127,10 +77,10 @@ class GatewayListe
 
     /**
      * @brief renvoie les To-Do List publiques
+     * @throws Exception
      */
     public function getListes(): array
     {
-        $gw=new GatewayTache($this->conn);
         $query = "SELECT * FROM Liste WHERE publique=true";
         $isOK = $this->conn->executeQuery($query, array());
         if (!$isOK) {
@@ -144,11 +94,11 @@ class GatewayListe
     }
 
     /**
-     * @brief renvoie les To-Do List privées d'un utilisateur
+     * @brief Renvoie les To-Do List privées et publiques d'un utilisateur
+     * @throws Exception
      */
     public function getListesPriv(): array
     {
-        $gw=new GatewayTache($this->conn);
         $query = "SELECT * FROM Liste WHERE createur=:c AND publique=false";
         $isOK = $this->conn->executeQuery($query, array(
             ":c" => array($_SESSION["login"], PDO::PARAM_STR)
@@ -173,7 +123,6 @@ class GatewayListe
     public function getListeParCreateur(int $page, int $nbListes, string $createur) : iterable
     {
         $gwTache = new GatewayTache($this->conn);
-        $listes = array();
         $requete = "SELECT * FROM Liste WHERE createur = :c  LIMIT :p, :n";
         $isOK=$this->conn->executeQuery($requete, [
             ":c" => [$createur, PDO::PARAM_STR],
@@ -202,6 +151,7 @@ class GatewayListe
 
     /**
      * @brief compte le nombre de To-Do List d'un utilisateur
+     * @throws Exception
      */
     public function getNbListesParCreateur(string $createur): int
     {

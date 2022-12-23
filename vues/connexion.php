@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,13 +10,12 @@
         <table>
             <tr>
                 <th>Login</th>
-                <td><input type="login" name="pseudonyme"></td>
+                <td><input type="text" name="pseudonyme"></td>
             </tr>
             <tr>
                 <th>Mot de passe</th>
                 <td><input type="password" name="motDePasse"></td>
             </tr>
-            </tbody>
         </table>
         <input value="Annuler" type="reset">
         <input type="submit" id="submit" name="veutSeConnecter" value="Valider">

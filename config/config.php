@@ -1,12 +1,9 @@
 <?php
 
-    //gen
-    $rep=__DIR__.'/../';
-
-    // liste des modules à inclure
+    /** Liste des modules à inclure */
     $dConfig['includes']=array('controleur/Validation.php');
 
-    //BD
+    /** Variables pour la connexion à la base de données */
     global $dsn;
     global $login;
     global $mdp;
@@ -14,7 +11,7 @@
     $login ="alferon";
     $mdp="achanger";
 
-    //Vues
+    /** Différentes vues */
     $vues['accueil']='vues/accueil.php';
     $vues['ajoutListe']='vues/ajoutListe.php';
     $vues['ajoutTache']='vues/ajoutTache.php';
@@ -24,5 +21,3 @@
     $vues['liste']='vues/liste.php';
     $vues['modifierListe']='vues/modifierListe.php';
     $vues['modifierTache']='vues/modifierTache.php';
-
-?>
