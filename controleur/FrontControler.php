@@ -12,7 +12,7 @@ class FrontControler{
             ],
             "Visiteur" => [
                 "seConnecter", "sInscrire", "accueil", "connexionEnCours",
-                "ajoutListe", "modifierListe", "afficherListe", "supprimerListe",
+                "ajoutListe", "modifierListe", "afficherListe", "supprimerListe", "veutInscrire",
                 "supprimerTache", "modifierTache", "ajouterTache","tacheFaite","ajouteLaListe","modifieLaListe","afficherTaches"
             ]
         );

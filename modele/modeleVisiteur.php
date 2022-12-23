@@ -162,20 +162,12 @@ class modeleVisiteur{
         return $gw->getListe($id)->getNom();
     }
 
-    /**
-     * @brief
-     * @throws Exception
-     */
-    public function getMaxPageTaches(int $listeID, int $nbElements) : int
+
+    public function sInscrire(string $pseudo, string $email,string $mdp1)
     {
         global $dsn, $login, $mdp;
-        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
-        $nbTotal = $gw->getNbTacheParListeID($listeID);
-        return ceil($nbTotal/$nbElements);
-    }
-
-    public function sInscrire(string $pseudo, mixed $mdp1)
-    {
+        $gw = new GatewayCompte(new Connexion($dsn, $login, $mdp));
+        $gw->creerCompte($pseudo, $email, $mdp1);
     }
 
 

@@ -15,10 +15,11 @@ class GatewayCompte
     /**
      * @brief permet à un visiteur de creer un compte
      */
-    public function CreerCompte(string $pseudo, string $mdp) : bool
+    public function creerCompte(string $pseudo, string $email, string $mdp) : bool
     {
-        $query = "INSERT INTO Utilisateur(pseudo, motDePasse) VALUES(:p, :m)";
+        $query = "INSERT INTO Utilisateur(email, pseudo, motDePasse) VALUES(:e,:p, :m)";
         return $this->conn->executeQuery($query, array(
+            ":e" => array($email, PDO::PARAM_STR),
             ":p" => array($pseudo, PDO::PARAM_STR),
             ":m" => array($mdp, PDO::PARAM_STR)));
     }

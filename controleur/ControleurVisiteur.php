@@ -24,10 +24,13 @@ class ControleurVisiteur
                     $this->accueil();
                     break;
                 case 'sInscrire':
-                    $this->sInscrire();
+                    require("vues/inscription.php");
                     break;
                 case 'ajoutListe':
                     require("vues/ajoutListe.php");
+                    break;
+                case 'veutInscrire':
+                    $this->sInscrire();
                     break;
                 case 'ajouteLaListe':
                     $this->ajoutListe();
@@ -161,48 +164,38 @@ class ControleurVisiteur
      */
     function sInscrire()
     {
-        if(!isset($_REQUEST["nom"]))
+        if(!isset($_REQUEST["pseudonyme"]))
         {
             throw new Exception("Le pseudonyme doit être renseigné");
         }
-        if(empty($_REQUEST["nom"]))
+        if(empty($_REQUEST["pseudonyme"]))
         {
             throw new Exception("Le pseudonyme renseigné est nul");
         }
-        if(strlen($_REQUEST["nom"]) < 5)
-        {
-            throw new Exception("Le pseudonyme doit contenir au minimum 5 caractères");
-        }
 
-        if(!isset($_REQUEST["mdp1"]))
+        if(!isset($_REQUEST["mdp"]))
         {
             throw new Exception("Le mot de passe n'a pas été envoyé au serveur");
         }
-        if(empty($_REQUEST["mdp1"]))
+        if(empty($_REQUEST["mdp"]))
         {
             throw new Exception("Le mot de passe renseigné est nul");
         }
-        if(strlen($_REQUEST["mdp1"]) < 8)
+        if(strlen($_REQUEST["mdp"]) < 8)
         {
             throw new Exception("Le mot de passe doit contenir au minimum 8 caractères");
         }
-        if($_REQUEST["mdp1"] != $_REQUEST["mdp2"])
-        {
-            throw new Exception("Les mots de passes sont différents");
-        }
 
-        $pseudo = Validation::nettoyerString($_REQUEST["nom"]);
-
+        $pseudo = Validation::nettoyerString($_REQUEST["pseudonyme"]);
+        $email=$_REQUEST["email"];
         if(is_null($pseudo))
         {
             throw new Exception("Le pseudonyme est nul");
         }
         $mdl = new modeleVisiteur();
-        $mdl->sInscrire($pseudo, $_REQUEST["mdp1"]);
+        $mdl->sInscrire($pseudo,$email, $_REQUEST["mdp"]);
 
         $_REQUEST["action"] = "seConnecter";
-        $_REQUEST["pseudonyme"] = $pseudo;
-        $_REQUEST["motDePasse"] = $_REQUEST["mdp1"];
         new ControleurVisiteur();
     }
 

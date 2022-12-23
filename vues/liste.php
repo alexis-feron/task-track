@@ -22,7 +22,11 @@
         foreach($taches as $tache):
             $tache=(object) $tache;?>
             <tr>
-                <th><?= $tache->nom ?></th>
+                <?php if($tache->faite==1): ?>
+                    <th style='text-decoration: line-through'><?= $tache->nom ?></th>
+                <?php else: ?>
+                    <th><?= $tache->nom ?></th>
+                <?php endif; ?>
                 <th><?php if($tache->faite==1) echo 'oui'; else echo 'non'?></th>
                 <th>
                     <input onclick="location.href='?action=tacheFaite&tache=<?=$tache->id?>'" type="button" value="Tache Faite">
