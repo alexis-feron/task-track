@@ -47,8 +47,11 @@ class ControleurVisiteur
                 case 'supprimerTache':
                     $this->supprimerTache();
                     break;
-                case 'modifierTache':
+                case 'modifieLaTache':
                     $this->modifierTache();
+                    break;
+                case 'modifierTache':
+                    require("vues/modifierTache.php");
                     break;
                 case 'ajouterTache':
                     require("vues/ajoutTache.php");
@@ -117,10 +120,8 @@ class ControleurVisiteur
             // Récupération des listes de l'utilisateur.trice connécté.e par le modèle
             $modele=new modeleUtilisateur();
             $listes = $modele->getListesPriv();
-            $maxPage = $modele->getMaxPageListes(Validation::nettoyerString($_SESSION["login"]), $nbElements);
         }else {
             $listes = $modele->getListes();
-            $maxPage = $modele->getMaxPageListes("", $nbElements);
         }
 
         // Affichage de la vue
@@ -395,19 +396,6 @@ class ControleurVisiteur
             throw new Exception("L'ID de la tache doit être positif");
         }
 
-        // Si le numéro de la liste est pas set, vide ou <=0, on lève une exception
-        if(!isset($_REQUEST["liste"]))
-        {
-            throw new Exception("Le parametre list doit exister");
-        }
-        if(empty($_REQUEST["liste"]))
-        {
-            throw new Exception("Le paramètre list doit contenire une valeur");
-        }
-        if(!Validation::validerIntPossitif($_REQUEST["liste"]))
-        {
-            throw new Exception("Le parametre list doit être un entier strictement superieur à 0");
-        }
         if(!isset($_REQUEST["nom"]))
         {
             throw new Exception("Le nom ne peut pas être vide");
@@ -419,14 +407,14 @@ class ControleurVisiteur
         $nom = Validation::nettoyerString($_REQUEST["nom"]);
         if(is_null($nom))
         {
-            throw new Exception("Le nom ou le commentaire contient des valeurs illégales");
+            throw new Exception("Le nom contient des valeurs illégales");
         }
 
         // Modification de la tache par le modèle
         $mdl->modifierNomTache($_REQUEST["tache"], $nom);
 
         // Redirection vers l'affichage le la liste list
-        $_REQUEST["action"] = "seeList";
+        $_REQUEST["action"] = "accueil";
         new ControleurVisiteur();
     }
 

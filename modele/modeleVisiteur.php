@@ -123,7 +123,7 @@ class modeleVisiteur{
     public function modifierNomTache(int $id, string $nouveauNom)
     {
         global $dsn, $login, $mdp;
-        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
         $gw->modifier($id, $nouveauNom);
     }
 
@@ -135,33 +135,6 @@ class modeleVisiteur{
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
         $gw->modifier($id, $nouveauNom);
     }
-
-    /**
-     * @brief
-     * @throws Exception
-     */
-    public function getMaxPageListes(string $createur, int $nbElements) : int
-    {
-        global $dsn, $login, $mdp;
-        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        if ($createur==""){
-            return 0;
-        }
-        $nbTotal = $gw->getNbListesParCreateur($createur);
-        return ceil($nbTotal/$nbElements);
-    }
-
-    /**
-     * @brief renvoie le nom de la liste
-     * @throws Exception
-     */
-    public function getNomListe(int $id): string
-    {
-        global $dsn, $login, $mdp;
-        $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
-        return $gw->getListe($id)->getNom();
-    }
-
 
     public function sInscrire(string $pseudo, string $email,string $mdp1)
     {

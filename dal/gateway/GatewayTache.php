@@ -82,15 +82,5 @@ class GatewayTache
         return $res;
     }
 
-    public function getNbTacheParListeID(int $idListe): int
-    {
-        $requette = "SELECT COUNT(*) FROM Tache WHERE idListe = :id";
-        if(!$this->conn->executeQuery($requette, array(":id"=>[$idListe, PDO::PARAM_INT])))
-        {
-            throw new Exception("Problème lors de la récupération des taches");
-        }
-        return $this->conn->getResults()[0][0];
-
-    }
 
 }

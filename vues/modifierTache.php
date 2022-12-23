@@ -6,18 +6,15 @@
 </head>
 <body>
     <?php require("barreNav.php") ?>
-    <form method="post" action="">
+    <form method="post" action="?action=modifieLaTache&tache=<?= $_REQUEST["tache"]?>">
         <table>
-            <thead>
             <tr>
-                <th>Nom</th>
-                <th>Faite</th>
+                <th>Nouveau nom de la tache</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td><input type="text"></td>
-                <td><input type="checkbox"></td>
+                <td><input type="text" name="nom"></td>
             </tr>
             </tbody>
         </table>
