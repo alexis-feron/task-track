@@ -15,7 +15,7 @@ class GatewayTache
     public function inserer(int $id, string $nom, int $idListe) : bool
     {
         $query = "INSERT INTO Tache(id, nom, faite, idListe) VALUES(:i, :n, :f, :l)";
-
+        //utilisation d'une requette preparée pour eviter les injections sql
         return $this->conn->executeQuery($query, array(
             ':i' => array($id, PDO::PARAM_INT),
             ':n' => array($nom, PDO::PARAM_STR),
@@ -26,7 +26,7 @@ class GatewayTache
     public function tacheFaite(int $id) : bool
     {
         $query = "UPDATE Tache SET faite=!faite WHERE id = :i";
-
+        //change le statut de la tache
         return $this->conn->executeQuery($query, array(
             ':i' => array($id, PDO::PARAM_INT)));
     }
@@ -34,6 +34,7 @@ class GatewayTache
     public function modifier(int $id,string $nvnom): bool
     {
         $query = "UPDATE Tache SET nom = :n WHERE id = :i";
+        //requette preparée pour eviter les injections sql
         return $this->conn->executeQuery($query,array(
             ':n' => array($nvnom, PDO::PARAM_STR),
             ':i' => array($id, PDO::PARAM_BOOL)));
@@ -42,6 +43,7 @@ class GatewayTache
     public function supprimer(int $id): bool
     {
         $query = "DELETE FROM Tache WHERE id =:id";
+        //utilisation d'une requette preparée pour eviter les injections sql
         return $this->conn->executeQuery($query,array(
             ':id' => array($id, PDO::PARAM_INT)));
     }

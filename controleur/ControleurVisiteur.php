@@ -139,7 +139,7 @@ class ControleurVisiteur
         {
             throw new Exception("Erreur lors de la transmission des informations de connection");
         }
-
+        //nettoyage des données rentrées par l'utilisateur
         $login = Validation::nettoyerString($_REQUEST["pseudonyme"]);
         $mdp = Validation::nettoyerString($_REQUEST["motDePasse"]);
 
@@ -148,6 +148,7 @@ class ControleurVisiteur
             throw new ValueError("Veuillez entrer votre login ET votre mot de passe ");
         }
         $mdl = new modeleVisiteur();
+        //appel au model
         $compte = $mdl->connexion($login, $mdp);
         if(!is_null($compte))
         {
@@ -386,11 +387,11 @@ class ControleurVisiteur
         }
         if(empty($_REQUEST["tache"]))
         {
-            throw new Exception("La tache doit contenire une valeur");
+            throw new Exception("La tache doit contenir une valeur");
         }
         if(!Validation::validerIntPossitif($_REQUEST["tache"]))
         {
-            throw new Exception("L'ID de la tache doit être positif");
+            throw new Exception("L'Id de la tache doit être positif");
         }
 
         if(!isset($_REQUEST["nom"]))

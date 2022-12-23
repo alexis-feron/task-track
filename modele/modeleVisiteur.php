@@ -18,13 +18,13 @@ class modeleVisiteur{
             echo 'Login incorrect';
             throw new Exception("Login incorrect");
         }
-        //if(!password_verify($motPasse, $compte->getMotDePasse()))
+        //verifie si le mot de passe est le bon
         if($motPasse!=$compte->getMotDePasse())
         {
             echo 'Mot de passe incorrect';
             throw new Exception("Mot de passe incorrect");
         }
-
+        //creer une session
         $_SESSION["login"]=$compte->getPseudonyme();
         $_SESSION["listes"]=$compte->getListes();
         return $compte;
@@ -53,7 +53,6 @@ class modeleVisiteur{
 
     public function getTaches(int $liste): array
     {
-        // Connection à la base de données
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
 
@@ -67,12 +66,14 @@ class modeleVisiteur{
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        //associe le createur de la liste à son login s'il est connecté, sinon visiteur le remplacera
         if(isset($_SESSION["login"])){
             $crea=$_SESSION["login"];
         }else{
             $crea="Visiteur";
             $pub=true;
         }
+        //créé la liste et l'insère en base de donnée'
         $liste=new Liste(rand(1000,2000000),$nom,$crea,$pub,array());
         return $gw->inserer($liste);
     }
@@ -84,6 +85,7 @@ class modeleVisiteur{
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayListe(new Connexion($dsn, $login, $mdp));
+        //appel à la gateway pour supprimer la To-Do Liste
         return $gw->supprimer($listID);
     }
 
@@ -94,16 +96,18 @@ class modeleVisiteur{
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
+        //appel à la gateway pour creer la To-Do List dans le base de donnée
         return $gw->inserer(rand(1000,2000000),$nom, $liste);
     }
 
     /**
-     * @brief permet de changer le statu de la tache. Si elle est faite elle devient à faire et inversement
+     * @brief permet de changer le statut de la tache. Si elle est faite elle devient à faire et inversement
      */
     public function tacheFaite(int $id): bool
     {
         global $dsn, $login, $mdp;
         $gw = new GatewayTache(new Connexion($dsn, $login, $mdp));
+        //appel à la gateway pour changer le statut de la To-Do List dans le base de donnée
         return $gw->tacheFaite($id);
     }
 

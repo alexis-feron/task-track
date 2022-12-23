@@ -17,6 +17,7 @@ class GatewayCompte
      */
     public function creerCompte(string $pseudo, string $email, string $mdp) : bool
     {
+        //requette preparée pour eviter les injections sql
         $query = "INSERT INTO Utilisateur(email, pseudo, motDePasse) VALUES(:e,:p, :m)";
         return $this->conn->executeQuery($query, array(
             ":e" => array($email, PDO::PARAM_STR),
@@ -29,6 +30,7 @@ class GatewayCompte
      */
     public function getCompte(string $pseudo) : ?Compte
     {
+        //requette preparée pour eviter les injections sql
         $gw = new GatewayListe($this->conn);
         $query = "SELECT * FROM Utilisateur WHERE pseudo=:p";
         if(!$this->conn->executeQuery($query, [":p" => [$pseudo, PDO::PARAM_STR]]))
