@@ -47,7 +47,7 @@ A l'iut nous passons par:
 - Se déconnecter
 
 
-## --------------------------- English Version ---------------------------
+# --------------------------- English Version ---------------------------
 
 <p>
 PHP project carried out during the 2nd year of the University Bachelor of Technology.
@@ -55,7 +55,7 @@ PHP project carried out during the 2nd year of the University Bachelor of Techno
 <p>
 We have created a To-Do list in which you can create lists made up of tasks. These lists can be private or public and it is possible to validate a task when it is performed.
 </p>
-
+<img src="style/accueil.jpg">
 
 ## Technologies used
 
