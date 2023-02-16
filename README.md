@@ -6,6 +6,7 @@ Projet PHP réalisé au cours de la 2ème année du Bachelor Universitaire de Te
 <p>
 Nous avons réalisé une To-Do liste dans laquelle on peut creer des listes composées de tâches. Ces listes peuvent être privées ou publique et il est possible de valider une tâche lorsque celle-ci est effectuée.  
 </p>
+<img src="style/accueil.jpg">
 
 
 ## Techologies utilisées  
